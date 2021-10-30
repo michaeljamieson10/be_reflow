@@ -1,4 +1,4 @@
-package com.neighbor.neighborwebsite.persistence.entity;
+package com.neighbor.restservice.persistence.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
