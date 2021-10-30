@@ -1,5 +1,6 @@
 package com.neighbor.restservice.persistence.entity;
 
+import com.neighbor.model.Address;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -23,13 +24,6 @@ public class UserEntity implements Serializable {
     @NonNull
     private String email;
 
-    @Column(name = "is_email_validated")
-    private boolean emailValidated;
-
-    @NonNull
-    @Column(name = "bcrypt_password")
-    private String bCryptEncodedPassword;
-
     @NonNull
     @Column(name = "first_name")
     private String firstName;
@@ -38,33 +32,29 @@ public class UserEntity implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    @NonNull
-    @Column(name = "phone")
-    private String phoneNumber;
+//    private int id;
+//    private String email;
+//    private String password;
+//    private String firstName;
+//    private String lastName;
+//    private Address address;
+//    @NonNull
+//    @Column(name = "phone")
+//    private String phoneNumber;
+//
+//    @Column(name = "date_of_birth")
+//    private Timestamp dateOfBirth;
+//
+//    @Column(name = "is_phone_validated")
+//    private boolean phoneNumberValidated;
+//
+//    @Column(name = "signup_zipcode")
+//    private String signupZipCode;
+//
+//    @Column(name = "is_system_administrator")
+//    private boolean systemAdministrator;
+//
+//    @Column
+//    private boolean enabled;
 
-    @Column(name = "date_of_birth")
-    private Timestamp dateOfBirth;
-
-    @Column(name = "is_phone_validated")
-    private boolean phoneNumberValidated;
-
-    @Column(name = "signup_zipcode")
-    private String signupZipCode;
-
-    @Column(name = "is_system_administrator")
-    private boolean systemAdministrator;
-
-    @Column(name = "default_address_id")
-    private Integer defaultAddressId;
-
-    @Column
-    private boolean enabled;
-
-    @Column(name = "created_timestamp")
-    @CreationTimestamp
-    private Timestamp createdTimestamp;
-
-    @Column(name = "updated_timestamp")
-    @UpdateTimestamp
-    private Timestamp updatedTimestamp;
 }
