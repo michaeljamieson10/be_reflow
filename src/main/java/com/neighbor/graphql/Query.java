@@ -1,8 +1,7 @@
-package com.neighbor.graphql.query;
+package com.neighbor.graphql;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.neighbor.graphql.query.request.UserRequest;
-import com.neighbor.graphql.query.response.UserResponse;
-import com.neighbor.model.User;
+import com.neighbor.graphql.request.UserRequest;
+import com.neighbor.graphql.response.UserResponse;
 import com.neighbor.restservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

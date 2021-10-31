@@ -1,4 +1,4 @@
-package com.neighbor.graphql.query.response;
+package com.neighbor.graphql.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neighbor.model.User;
@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Data
@@ -18,7 +19,13 @@ public class UserResponse {
     private String lastName;
     private String email;
 
+    //this is for internal use do not put into schema
+    private User user;
+
+    private List<OrderResponse> orderResponseList;
+
     public UserResponse (User user) {
+        this.user = user;
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();

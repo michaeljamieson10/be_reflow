@@ -1,4 +1,4 @@
-package com.neighbor.graphql.query.request;
+package com.neighbor.graphql.request;
 
 import lombok.Getter;
 import lombok.Setter;

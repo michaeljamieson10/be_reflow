@@ -3,7 +3,7 @@ type Query { #name of function must match function in Query class
     firstQuery : String #to call  query { firstQuery}
     secondQuery: String #to call  query { secondQuery}
     fullName(firstName : String, lastName : String) : String #fullName(firstName : String, lastName : String)<- function params : String <-Return type    # query { fullName(firstName:"John", lastName:"Smith")}
-    fullNameUser(user : UserRequest) : String
+    fullNameUser(userRequest : UserRequest) : String
     user(id: Int) : UserResponse
 }
 #must get user for fullNameUser here
@@ -16,6 +16,10 @@ type UserResponse {
     id : Int
     firstName : String
     lastName : String
+    orders : [OrderResponse]
+}
+type OrderResponse {
+    name : String
 }
 
 #can continue to get inputs like this for models inside of models

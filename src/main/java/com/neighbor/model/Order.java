@@ -4,22 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Builder
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User {
+public class Order {
 
     private int id;
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private Address address;
-    private List<Order> orders;
-
+    private String name;
+    private User orderedUser;
 
 }
