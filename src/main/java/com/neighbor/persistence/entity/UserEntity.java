@@ -1,4 +1,4 @@
-package com.neighbor.restservice.persistence.entity;
+package com.neighbor.persistence.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,19 +11,21 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-public class OrderEntity implements Serializable {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
     private int id;
 
     @NonNull
-    @Column(name = "name")
-    private String name;
+    private String email;
 
     @NonNull
-    @JoinColumn(name="user_id")
-    @ManyToOne(optional = false)
-    private UserEntity userEntity;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @NonNull
+    @Column(name = "last_name")
+    private String lastName;
 
 }

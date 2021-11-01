@@ -1,4 +1,4 @@
-package com.neighbor.restservice.service;
+package com.neighbor.service;
 
 import com.neighbor.model.User;
 

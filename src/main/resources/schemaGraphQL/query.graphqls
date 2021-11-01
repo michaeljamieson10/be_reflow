@@ -19,6 +19,7 @@ type UserResponse {
     orders : [OrderResponse]
 }
 type OrderResponse {
+    id : Int
     name : String
 }
 

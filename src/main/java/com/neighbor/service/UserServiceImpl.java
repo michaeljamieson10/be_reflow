@@ -1,8 +1,8 @@
-package com.neighbor.restservice.service;
+package com.neighbor.service;
 
 import com.neighbor.model.User;
-import com.neighbor.restservice.persistence.entity.UserEntity;
-import com.neighbor.restservice.persistence.repository.UserRepository;
+import com.neighbor.persistence.entity.UserEntity;
+import com.neighbor.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

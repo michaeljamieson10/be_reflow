@@ -1,7 +1,6 @@
-package com.neighbor.restservice.persistence.repository;
+package com.neighbor.persistence.repository;
 
-import com.neighbor.model.User;
-import com.neighbor.restservice.persistence.entity.UserEntity;
+import com.neighbor.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
