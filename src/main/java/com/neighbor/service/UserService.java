@@ -1,8 +1,9 @@
 package com.neighbor.service;
 
 import com.neighbor.model.User;
+import com.neighbor.persistence.entity.UserEntity;
 
 public interface UserService {
-    User getUser(int id);
+    UserEntity getUser(int id);
 
 }

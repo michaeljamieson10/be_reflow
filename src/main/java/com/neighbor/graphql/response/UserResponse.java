@@ -2,6 +2,7 @@ package com.neighbor.graphql.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neighbor.model.User;
+import com.neighbor.persistence.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,16 +21,17 @@ public class UserResponse {
     private String email;
 
     //this is for internal use do not put into schema
-    private User user;
+    private UserEntity userEntity;
 
     private List<OrderResponse> orderResponseList;
 
-    public UserResponse (User user) {
-        this.user = user;
-        this.id = user.getId();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
+    public UserResponse (UserEntity userEntity) {
+//        this.user = user;
+        this.userEntity = userEntity;
+        this.id = userEntity.getId();
+        this.firstName = userEntity.getFirstName();
+        this.lastName = userEntity.getLastName();
+        this.email = userEntity.getEmail();
 
 
     }

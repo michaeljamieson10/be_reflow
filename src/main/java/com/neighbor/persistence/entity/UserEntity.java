@@ -6,6 +6,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,5 +28,8 @@ public class UserEntity implements Serializable {
     @NonNull
     @Column(name = "last_name")
     private String lastName;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderEntity> orderEntities;
 
 }

@@ -16,8 +16,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUser(int id) {
+    public UserEntity getUser(int id) {
         UserEntity userEntity = userRepository.findById(id);
-        return User.builder().id(userEntity.getId()).email(userEntity.getEmail()).firstName(userEntity.getFirstName()).lastName(userEntity.getLastName()).build();
+        return userEntity;
+//        return User.builder().id(userEntity.getId()).email(userEntity.getEmail()).firstName(userEntity.getFirstName()).lastName(userEntity.getLastName()).build();
     }
 }

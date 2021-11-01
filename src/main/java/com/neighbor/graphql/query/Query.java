@@ -27,7 +27,7 @@ public class Query implements GraphQLQueryResolver {
     public String fullNameUser (UserRequest userRequest){
         return userRequest.getFirstName() + " " + userRequest.getLastName();
     }
-    public UserResponse user (int id){
+    public UserResponse userEntity (int id){
         return  new UserResponse(userService.getUser(id));
     }
 }

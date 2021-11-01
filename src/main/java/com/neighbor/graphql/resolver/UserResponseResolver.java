@@ -5,6 +5,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import com.neighbor.graphql.response.OrderResponse;
 import com.neighbor.graphql.response.UserResponse;
 import com.neighbor.model.Order;
+import com.neighbor.persistence.entity.OrderEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class UserResponseResolver implements GraphQLResolver<UserResponse> {
         //graphql will call this automaticall you will not call this call
         List<OrderResponse> orders = new ArrayList<OrderResponse>();
 
-        if(userResponse.getUser().getOrders() != null){
-            for(Order order: userResponse.getUser().getOrders()){
-                orders.add(new OrderResponse(order));
+        if(userResponse.getUserEntity().getOrderEntities() != null){
+            for(OrderEntity orderEntity: userResponse.getUserEntity().getOrderEntities()){
+                orders.add(new OrderResponse(orderEntity));
             }
         }
 

@@ -4,18 +4,20 @@ type Query { #name of function must match function in Query class
     secondQuery: String #to call  query { secondQuery}
     fullName(firstName : String, lastName : String) : String #fullName(firstName : String, lastName : String)<- function params : String <-Return type    # query { fullName(firstName:"John", lastName:"Smith")}
     fullNameUser(userRequest : UserRequest) : String
-    user(id: Int) : UserResponse
+    userEntity(id: Int) : UserResponse
 }
 #must get user for fullNameUser here
 input UserRequest {
     firstName : String
     lastName : String
+    email : String
 }
 
 type UserResponse {
     id : Int
     firstName : String
     lastName : String
+    email : String
     orders : [OrderResponse]
 }
 type OrderResponse {
