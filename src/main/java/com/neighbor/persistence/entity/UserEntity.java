@@ -30,6 +30,6 @@ public class UserEntity implements Serializable {
     private String lastName;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderEntity> orderEntities;
+    private List<OrderEntity> orderEntitityList;
 
 }
