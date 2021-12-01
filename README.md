@@ -1,4 +1,4 @@
-# template backend
+# template backends
 backend java mysql
 services:
   db:
