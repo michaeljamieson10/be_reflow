@@ -1,4 +1,4 @@
-# neighbor-back
+# template backend
 backend java mysql
 services:
   db:
