@@ -29,14 +29,6 @@ dependencies {
     //MySQL connector.
     implementation("mysql:mysql-connector-java")
 
-// https://mvnrepository.com/artifact/com.graphql-java/graphql-spring-boot-starter
-    implementation group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '5.0.2'
-    // https://mvnrepository.com/artifact/com.graphql-java/graphql-spring-boot-starter
-    implementation group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '5.0.2'
-
-// https://mvnrepository.com/artifact/com.graphql-java/graphql-java-tools
-    implementation group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
-//    runtimeOnly 'mysql:mysql-connector-java'
 }
 
 test {
