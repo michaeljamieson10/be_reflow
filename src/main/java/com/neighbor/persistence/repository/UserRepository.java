@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity> {
+    UserEntity findByEmail(String email);
 
-    UserEntity findById(int id);
 }

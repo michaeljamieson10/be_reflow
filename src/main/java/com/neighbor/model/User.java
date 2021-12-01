@@ -19,7 +19,10 @@ public class User {
     private String firstName;
     private String lastName;
     private Address address;
-    private List<Order> orders;
-
+    private String phoneNumber;
+    private Timestamp birthDate;
+    private Boolean systemAdministrator;
+    private Timestamp createdTimestamp;
+    private Timestamp lastCompletedOrderTimestamp;
 
 }

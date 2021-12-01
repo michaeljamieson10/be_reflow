@@ -9,46 +9,24 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
-public class UserEntity implements Serializable {
+@Table(name="user_role")
+public class UserRoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
     private int id;
 
     @NonNull
-    private String email;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @NonNull
-    @Column(name = "bcrypt_password")
-    private String bCryptEncodedPassword;
-
-    @NonNull
-    @Column(name = "first_name")
-    private String firstName;
-
-    @NonNull
-    @Column(name = "last_name")
-    private String lastName;
-
-    @NonNull
-    @Column(name = "phone")
-    private String phoneNumber;
-
-    @Column(name = "date_of_birth")
-    private Timestamp dateOfBirth;
-
-    @NonNull
-    @Column(name = "is_system_administrator")
-    private boolean systemAdministrator;
-
     @Column
-    private boolean enabled;
+    private String role;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp
