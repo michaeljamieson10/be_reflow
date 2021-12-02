@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 
@@ -53,30 +54,29 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
         return new JdbcAuthorizationCodeServices(dataSource);
     }
 
-//    @Override
-//    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-//            throws Exception {
-//        endpoints
-//                .authorizationCodeServices(authorizationCodeServices())
-//                .authenticationManager(auth)
-//                .userDetailsService(userDetailsService)
-//                .tokenStore(tokenStore())
-//                .approvalStoreDisabled();
-//    }
-@Override
-public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-        throws Exception {
-    endpoints.authenticationManager(auth);
-}
-
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+            throws Exception {
+        endpoints
+                .authorizationCodeServices(authorizationCodeServices())
+                .authenticationManager(auth)
+                .userDetailsService(userDetailsService)
+                .tokenStore(tokenStore())
+                .approvalStoreDisabled();
+    }
+    //TODO: code that got the authenticate to give back a token
+//@Override
+//public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+//        throws Exception {
+//    endpoints.authenticationManager(auth);
+//}
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //TODO: Something is wrong here and unable to create my own token via datasource
-//        clients
-//                .jdbc(dataSource);
+        clients
+                .jdbc(dataSource);
 
-        clients.inMemory().withClient("javainuse-client").secret(passwordEncoder.encode("javainuse-secret"))
-                .authorizedGrantTypes("client_credentials","password","refresh_token").scopes("read","write");
-//                .scopes("resource-server-read", "resource-server-write");
+//        clients.inMemory().withClient("javainuse-client").secret(passwordEncoder.encode("javainuse-secret"))
+//                .authorizedGrantTypes("client_credentials","password","refresh_token").scopes("read","write");
     }
 }
