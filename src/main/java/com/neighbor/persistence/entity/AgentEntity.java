@@ -12,9 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "delivery_service_provider_manager", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id","delivery_service_provider_id"})
-})
+@Table(name = "agent")
 public class AgentEntity {
 
     @Id
@@ -27,7 +25,7 @@ public class AgentEntity {
     private UserEntity userEntity;
 
     @Column(name = "is_active")
-    private boolean active;
+    private boolean active = true;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp
