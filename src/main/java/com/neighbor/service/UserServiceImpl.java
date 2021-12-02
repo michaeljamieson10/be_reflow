@@ -8,10 +8,12 @@ import com.neighbor.model.UserRegistration;
 import com.neighbor.persistence.entity.UserEntity;
 import com.neighbor.persistence.entity.UserRoleEntity;
 import com.neighbor.persistence.repository.UserRepository;
+import com.neighbor.persistence.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import utilities.UserRoles;
 
 import java.util.Objects;
 
@@ -20,7 +22,7 @@ import static java.util.Optional.ofNullable;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-//    private final UserRole
+    private final UserRoleRepository userRoleRepository;
     private final AuthenticatedUserResolver authenticatedUserResolver;
     private final PasswordEncoder passwordEncoder;
 
@@ -28,12 +30,14 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl(
             UserRepository userRepository,
             AuthenticatedUserResolver authenticatedUserResolver,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            UserRoleRepository userRoleRepository
 
             ){
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -71,8 +75,9 @@ public class UserServiceImpl implements UserService{
 
             UserRoleEntity userRoleEntity = new UserRoleEntity();
             userRoleEntity.setUserEmail(email);
-//            userRoleEntity.setRole(UserRoles.USER_ROLE);
-//            userRoleRepository.save(userRoleEntity);
+            userRoleEntity.setRole(UserRoles.USER_ROLE);
+            userRoleRepository.save(userRoleEntity);
+
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
