@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -27,17 +28,19 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     private final DataSource dataSource;
 
     private final UserDetailsService userDetailsService;
-
+    private PasswordEncoder passwordEncoder;
 
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     public OAuth2Configuration(AuthenticationManager auth,
                                DataSource dataSource,
-                               @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+                               @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
+                               PasswordEncoder passwordEncoder) {
         this.auth = auth;
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -50,20 +53,30 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
         return new JdbcAuthorizationCodeServices(dataSource);
     }
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-            throws Exception {
-        endpoints
-                .authorizationCodeServices(authorizationCodeServices())
-                .authenticationManager(auth)
-                .userDetailsService(userDetailsService)
-                .tokenStore(tokenStore())
-                .approvalStoreDisabled();
-    }
+//    @Override
+//    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+//            throws Exception {
+//        endpoints
+//                .authorizationCodeServices(authorizationCodeServices())
+//                .authenticationManager(auth)
+//                .userDetailsService(userDetailsService)
+//                .tokenStore(tokenStore())
+//                .approvalStoreDisabled();
+//    }
+@Override
+public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+        throws Exception {
+    endpoints.authenticationManager(auth);
+}
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients
-                .jdbc(dataSource);
+        //TODO: Something is wrong here and unable to create my own token via datasource
+//        clients
+//                .jdbc(dataSource);
+
+        clients.inMemory().withClient("javainuse-client").secret(passwordEncoder.encode("javainuse-secret"))
+                .authorizedGrantTypes("client_credentials","password","refresh_token").scopes("read","write");
+//                .scopes("resource-server-read", "resource-server-write");
     }
 }
