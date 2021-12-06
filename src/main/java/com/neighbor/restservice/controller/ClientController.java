@@ -24,7 +24,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 //
-    @ApiOperation(value = "Get Client from user id.")
+    @ApiOperation(value = "Get Client from user ids.")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Client> get(@RequestBody Client client) {
         return new ResponseEntity<>(clientService.get(client), HttpStatus.OK);
