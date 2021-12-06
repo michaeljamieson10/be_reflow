@@ -37,7 +37,7 @@ public class AgentServiceImpl implements AgentService {
     }
     @Override
     public Agent createNewAgent(Agent agent) {
-        permissionsValidator.validateSystemAdministrator(authenticatedUserResolver.user());
+//        permissionsValidator.validateSystemAdministrator(authenticatedUserResolver.user());
         if(Objects.isNull(agent.getUser())) throw new EntityMissingParametersException(Agent.class, "user");
         UserEntity userEntity = userRepository.findById(agent.getUser().getId()).orElse(null);
         if(Objects.isNull(userEntity)) throw new UserNotFoundException("");

@@ -24,11 +24,11 @@ public class ClientController {
         this.clientService = clientService;
     }
 //
-//    @ApiOperation(value = "Get user from access token.")
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<User> get() {
-//        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
-//    }
+    @ApiOperation(value = "Get Client from user id.")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Client> get(@RequestBody Client client) {
+        return new ResponseEntity<>(clientService.get(client), HttpStatus.OK);
+    }
 
     @ApiOperation(value = "Create a new client.")
     @RequestMapping(method = RequestMethod.POST)

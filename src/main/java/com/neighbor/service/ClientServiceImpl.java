@@ -40,11 +40,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client createNewClient(Client client) {
+    public Client get(Client client) {
         permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
-        if(Objects.isNull(client.getUser())) throw new EntityMissingParametersException(Client.class, "user");
-        UserEntity userEntity = userRepository.findById(client.getUser().getId()).orElse(null);
-        if(Objects.isNull(userEntity)) throw new UserNotFoundException("");
+        ClientEntity clientEntity = clientRepository.findById(client.getId()).orElse(null);
+        return fromEntity(clientEntity);
+    }
+
+    @Override
+    public Client createNewClient(Client client) {
+//        permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
+        UserEntity userEntity = getUserEntity(client.getUser());
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setUserEntity(userEntity);
         clientEntity.setActive(true);
@@ -59,4 +64,12 @@ public class ClientServiceImpl implements ClientService {
                 .user(User.builder().id(clientEntity.getUserEntity().getId()).build())
                 .build();
     }
+
+    private UserEntity getUserEntity(User user) {
+        if(Objects.isNull(user)) throw new EntityMissingParametersException(Client.class, "user");
+        UserEntity userEntity = userRepository.findById(user.getId()).orElse(null);
+        if(Objects.isNull(userEntity)) throw new UserNotFoundException("");
+        return userEntity;
+    }
+
 }
