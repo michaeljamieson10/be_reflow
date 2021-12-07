@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface OrderRepository extends JpaRepository<TransactionInvitationEntity, Integer>, JpaSpecificationExecutor<TransactionInvitationEntity> {
+public interface TransactionInvitationRepository extends JpaRepository<TransactionInvitationEntity, Integer>, JpaSpecificationExecutor<TransactionInvitationEntity> {
 }
