@@ -1,6 +1,8 @@
 package com.neighbor.service;
 
 import com.neighbor.component.AuthenticatedUserResolver;
+import com.neighbor.component.FromEntity;
+import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.exception.EntityMissingParametersException;
 import com.neighbor.exception.UserNotFoundException;
@@ -25,51 +27,50 @@ public class ClientServiceImpl implements ClientService {
     private final AuthenticatedUserResolver authenticatedUserResolver;
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
+    private final FromEntity fromEntity;
+    private final GetEntity getEntity;
 
     @Autowired
     public ClientServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             UserRepository userRepository,
-            ClientRepository clientRepository
+            ClientRepository clientRepository,
+            FromEntity fromEntity,
+            GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.userRepository = userRepository;
         this.clientRepository = clientRepository;
+        this.getEntity = getEntity;
+        this.fromEntity = fromEntity;
     }
 
     @Override
     public Client get(Client client) {
         permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
-        ClientEntity clientEntity = clientRepository.findById(client.getId()).orElse(null);
-        return fromEntity(clientEntity);
+        ClientEntity clientEntity = getEntity.getClientEntity(client);
+        return fromEntity.fromClientEntity(clientEntity);
     }
 
     @Override
     public Client createNewClient(Client client) {
 //        permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
-        UserEntity userEntity = getUserEntity(client.getUser());
+        if(Objects.isNull(client.getUser())) throw new EntityMissingParametersException(Client.class, "user");
+        UserEntity userEntity = getEntity.getUserEntity(client.getUser());
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setUserEntity(userEntity);
         clientEntity.setActive(true);
         clientRepository.save(clientEntity);
-        return fromEntity(clientEntity);
+        return fromEntity.fromClientEntity(clientEntity);
     }
 
-    private Client fromEntity(ClientEntity clientEntity) {
-        return Client.builder()
-                .id(clientEntity.getId())
-                .isActive(clientEntity.isActive())
-                .user(User.builder().id(clientEntity.getUserEntity().getId()).build())
-                .build();
-    }
-
-    private UserEntity getUserEntity(User user) {
-        if(Objects.isNull(user)) throw new EntityMissingParametersException(Client.class, "user");
-        UserEntity userEntity = userRepository.findById(user.getId()).orElse(null);
-        if(Objects.isNull(userEntity)) throw new UserNotFoundException("");
-        return userEntity;
-    }
+//    private UserEntity getUserEntity(User user) {
+//        if(Objects.isNull(user)) throw new EntityMissingParametersException(Client.class, "user");
+//        UserEntity userEntity = userRepository.findById(user.getId()).orElse(null);
+//        if(Objects.isNull(userEntity)) throw new UserNotFoundException(0);
+//        return userEntity;
+//    }
 
 }

@@ -1,6 +1,8 @@
 package com.neighbor.service;
 
 import com.neighbor.component.AuthenticatedUserResolver;
+import com.neighbor.component.FromEntity;
+import com.neighbor.component.GetEntity;
 import com.neighbor.exception.EmailAlreadyExistsException;
 import com.neighbor.exception.EntityMissingParametersException;
 import com.neighbor.model.User;
@@ -25,25 +27,32 @@ public class UserServiceImpl implements UserService{
     private final UserRoleRepository userRoleRepository;
     private final AuthenticatedUserResolver authenticatedUserResolver;
     private final PasswordEncoder passwordEncoder;
+    private final GetEntity getEntity;
+    private final FromEntity fromEntity;
+
 
     @Autowired
     public UserServiceImpl(
             UserRepository userRepository,
             AuthenticatedUserResolver authenticatedUserResolver,
             PasswordEncoder passwordEncoder,
-            UserRoleRepository userRoleRepository
+            UserRoleRepository userRoleRepository,
+            GetEntity getEntity,
+            FromEntity fromEntity
 
             ){
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.getEntity = getEntity;
+        this.fromEntity = fromEntity;
     }
 
     @Override
     public User get() {
         UserEntity userEntity = authenticatedUserResolver.user();
-        return fullUserFromEntity(userRepository.findById(userEntity.getId()).orElse(null));
+        return fromEntity.fromUserEntity(userRepository.findById(userEntity.getId()).orElse(null));
     }
 
     @Override
@@ -62,7 +71,6 @@ public class UserServiceImpl implements UserService{
         if (ofNullable(userRepository.findByEmail((email))).isPresent()) {
             throw new EmailAlreadyExistsException(email);
         }
-//        try {
             UserEntity userEntity = new UserEntity();
             userEntity.setEmail(email);
             userEntity.setBCryptEncodedPassword(passwordEncoder.encode(user.getPassword()));
@@ -78,21 +86,11 @@ public class UserServiceImpl implements UserService{
             userRoleEntity.setRole(UserRoles.USER_ROLE);
             userRoleRepository.save(userRoleEntity);
 
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-        return fullUserFromEntity(userEntity);
+
+        return fromEntity.fromUserEntity(userEntity);
 
     }
 
-    private User fullUserFromEntity(UserEntity userEntity) {
-        return User.builder().id(userEntity.getId())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .email(userEntity.getEmail())
-                .systemAdministrator(userEntity.isSystemAdministrator())
-                .build();
-    }
 
 
 }

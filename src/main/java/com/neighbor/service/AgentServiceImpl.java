@@ -1,6 +1,8 @@
 package com.neighbor.service;
 
 import com.neighbor.component.AuthenticatedUserResolver;
+import com.neighbor.component.FromEntity;
+import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.exception.EntityMissingParametersException;
 import com.neighbor.exception.UserNotFoundException;
@@ -22,37 +24,35 @@ public class AgentServiceImpl implements AgentService {
     private final AuthenticatedUserResolver authenticatedUserResolver;
     private final UserRepository userRepository;
     private final AgentRepository agentRepository;
+    private final GetEntity getEntity;
+    private final FromEntity fromEntity;
 
     @Autowired
     public AgentServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             UserRepository userRepository,
-            AgentRepository agentRepository
+            AgentRepository agentRepository,
+            GetEntity getEntity,
+            FromEntity fromEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.userRepository = userRepository;
         this.agentRepository = agentRepository;
+        this.getEntity = getEntity;
+        this.fromEntity = fromEntity;
     }
     @Override
     public Agent createNewAgent(Agent agent) {
 //        permissionsValidator.validateSystemAdministrator(authenticatedUserResolver.user());
         if(Objects.isNull(agent.getUser())) throw new EntityMissingParametersException(Agent.class, "user");
-        UserEntity userEntity = userRepository.findById(agent.getUser().getId()).orElse(null);
-        if(Objects.isNull(userEntity)) throw new UserNotFoundException("");
+        UserEntity userEntity = getEntity.getUserEntity(agent.getUser());
         AgentEntity agentEntity = new AgentEntity();
         agentEntity.setUserEntity(userEntity);
         agentEntity.setActive(true);
         agentRepository.save(agentEntity);
-        return fromEntity(agentEntity);
+        return fromEntity.fromAgentEntity(agentEntity);
     }
 
-    private Agent fromEntity(AgentEntity agentEntity) {
-        return Agent.builder()
-                .id(agentEntity.getId())
-                .isActive(agentEntity.isActive())
-                .user(User.builder().id(agentEntity.getUserEntity().getId()).build())
-                .build();
-    }
 }
