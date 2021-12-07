@@ -1,17 +1,14 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionInvitationStatusType;
-import com.neighbor.model.Agent;
-import com.neighbor.model.Client;
-import com.neighbor.model.TransactionInvitation;
+import com.neighbor.model.Transaction.TransactionInvitation;
 import com.neighbor.persistence.entity.AgentEntity;
 import com.neighbor.persistence.entity.ClientEntity;
 import com.neighbor.persistence.entity.TransactionInvitationEntity;
-import com.neighbor.persistence.entity.UserEntity;
 import com.neighbor.persistence.repository.TransactionInvitationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -47,12 +47,8 @@ public class TransactionInvitationEntity {
     @CreationTimestamp
     private Timestamp createdTimestamp;
 
-
     @Column(name = "updated_timestamp")
     @UpdateTimestamp
     private Timestamp updatedTimestamp;
-
-
-
 
 }

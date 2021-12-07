@@ -1,9 +1,7 @@
 package com.neighbor.restservice.controller;
 
-import com.neighbor.model.Agent;
-import com.neighbor.model.TransactionInvitation;
-import com.neighbor.service.AgentService;
-import com.neighbor.service.TransactionInvitationService;
+import com.neighbor.model.Transaction.TransactionInvitation;
+import com.neighbor.service.Transaction.TransactionInvitationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

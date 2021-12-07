@@ -1,4 +1,4 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ContractsSignedServiceImpl implements ContractsSignedService {
+public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -17,7 +17,7 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
     private final GetEntity getEntity;
 
     @Autowired
-    public ContractsSignedServiceImpl(
+    public FinalWalkthroughServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,

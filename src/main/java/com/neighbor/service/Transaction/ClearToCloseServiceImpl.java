@@ -1,37 +1,30 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.persistence.repository.ClientRepository;
-import com.neighbor.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PreApprovalServiceImpl implements PreApprovalService {
+public class ClearToCloseServiceImpl implements ClearToCloseService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
-    private final UserRepository userRepository;
-    private final ClientRepository clientRepository;
+
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
     @Autowired
-    public PreApprovalServiceImpl(
+    public ClearToCloseServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
-            UserRepository userRepository,
-            ClientRepository clientRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
-        this.userRepository = userRepository;
-        this.clientRepository = clientRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }

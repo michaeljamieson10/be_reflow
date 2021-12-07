@@ -1,43 +1,30 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.exception.EntityMissingParametersException;
-import com.neighbor.model.Client;
-import com.neighbor.persistence.entity.ClientEntity;
-import com.neighbor.persistence.entity.UserEntity;
-import com.neighbor.persistence.repository.ClientRepository;
-import com.neighbor.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
-public class HomeCriteriaServiceImpl implements HomeCriteriaService {
+public class ContractsSignedServiceImpl implements ContractsSignedService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
-    private final UserRepository userRepository;
-    private final ClientRepository clientRepository;
+
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
     @Autowired
-    public HomeCriteriaServiceImpl(
+    public ContractsSignedServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
-            UserRepository userRepository,
-            ClientRepository clientRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
-        this.userRepository = userRepository;
-        this.clientRepository = clientRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }

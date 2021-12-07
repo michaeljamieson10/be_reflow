@@ -1,4 +1,4 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HomeownersInsuranceServiceImpl implements HomeInspectionService {
+public class HomeInspectionServiceImpl implements HomeInspectionService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -17,7 +17,7 @@ public class HomeownersInsuranceServiceImpl implements HomeInspectionService {
     private final GetEntity getEntity;
 
     @Autowired
-    public HomeownersInsuranceServiceImpl(
+    public HomeInspectionServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,

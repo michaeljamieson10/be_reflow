@@ -1,16 +1,14 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.persistence.repository.ClientRepository;
-import com.neighbor.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AcceptedOfferServiceImpl implements AcceptedOfferService {
+public class ClosingServiceImpl implements ClosingService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -19,7 +17,7 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
     private final GetEntity getEntity;
 
     @Autowired
-    public AcceptedOfferServiceImpl(
+    public ClosingServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,

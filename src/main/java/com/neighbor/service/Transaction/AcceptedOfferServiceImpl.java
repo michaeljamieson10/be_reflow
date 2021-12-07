@@ -1,4 +1,4 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClosingServiceImpl implements ClosingService {
+public class AcceptedOfferServiceImpl implements AcceptedOfferService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -17,7 +17,7 @@ public class ClosingServiceImpl implements ClosingService {
     private final GetEntity getEntity;
 
     @Autowired
-    public ClosingServiceImpl(
+    public AcceptedOfferServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -47,6 +47,7 @@ public class ClosingServiceImpl implements ClosingService {
 //        clientRepository.save(clientEntity);
 //        return fromEntity.fromClientEntity(clientEntity);
 //    }
+
 
 
 

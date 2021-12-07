@@ -1,4 +1,4 @@
-package com.neighbor.service;
+package com.neighbor.service.Transaction;
 
 public interface HomeCriteriaService {
 }
