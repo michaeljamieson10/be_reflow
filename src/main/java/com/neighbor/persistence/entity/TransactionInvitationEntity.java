@@ -33,7 +33,7 @@ public class TransactionInvitationEntity implements Serializable {
 
     @Column(name="transaction_invitation", columnDefinition = "ENUM('pending', 'accepted')")
     @Enumerated(EnumType.STRING)
-    private TransactionInvitationStatusType transactionInvitationStatusType;
+    private TransactionInvitationStatusType transactionInvitationStatusType = TransactionInvitationStatusType.pending;
 
     @Column(name = "accepted_timestamp")
     private Timestamp acceptedTimestamp;
