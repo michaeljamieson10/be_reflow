@@ -4,6 +4,7 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.model.transaction.FinalWalkthrough;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,11 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+    }
+
+    @Override
+    public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
+        return null;
     }
 
 //    @Override

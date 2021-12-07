@@ -2,11 +2,11 @@ package com.neighbor.component;
 
 import com.neighbor.model.Agent;
 import com.neighbor.model.Client;
-import com.neighbor.model.Transaction.TransactionInvitation;
+import com.neighbor.model.transaction.TransactionInvitation;
 import com.neighbor.model.User;
 import com.neighbor.persistence.entity.AgentEntity;
 import com.neighbor.persistence.entity.ClientEntity;
-import com.neighbor.persistence.entity.TransactionInvitationEntity;
+import com.neighbor.persistence.entity.transaction.TransactionInvitationEntity;
 import com.neighbor.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

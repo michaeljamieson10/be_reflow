@@ -4,11 +4,12 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.model.transaction.HomeownersInsuance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HomeownersInsuranceServiceImpl implements HomeInspectionService {
+public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -27,6 +28,11 @@ public class HomeownersInsuranceServiceImpl implements HomeInspectionService {
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+    }
+
+    @Override
+    public HomeownersInsuance createHomeInspection(HomeownersInsuance homeInspection) {
+        return null;
     }
 
 //    @Override

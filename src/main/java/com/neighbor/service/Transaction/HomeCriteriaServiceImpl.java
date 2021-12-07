@@ -4,6 +4,7 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.model.transaction.HomeCriteria;
 import com.neighbor.persistence.repository.ClientRepository;
 import com.neighbor.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,10 @@ public class HomeCriteriaServiceImpl implements HomeCriteriaService {
         this.fromEntity = fromEntity;
     }
 
-//    @Override
-//    public Client get(Client client) {
-//        permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
-//        ClientEntity clientEntity = getEntity.getClientEntity(client);
-//        return fromEntity.fromClientEntity(clientEntity);
-//    }
+    @Override
+    public HomeCriteria createNewHomeCriteria(HomeCriteria homeCriteria) {
+        return null;
+    }
 
 //    @Override
 //    public Client createNewClient(Client client) {

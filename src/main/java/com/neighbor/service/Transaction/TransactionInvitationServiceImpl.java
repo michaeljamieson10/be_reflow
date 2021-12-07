@@ -5,11 +5,11 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionInvitationStatusType;
-import com.neighbor.model.Transaction.TransactionInvitation;
+import com.neighbor.model.transaction.TransactionInvitation;
 import com.neighbor.persistence.entity.AgentEntity;
 import com.neighbor.persistence.entity.ClientEntity;
-import com.neighbor.persistence.entity.TransactionInvitationEntity;
-import com.neighbor.persistence.repository.TransactionInvitationRepository;
+import com.neighbor.persistence.entity.transaction.TransactionInvitationEntity;
+import com.neighbor.persistence.repository.transaction.TransactionInvitationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
