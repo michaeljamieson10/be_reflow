@@ -14,34 +14,18 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "transaction_invitation")
-public class TransactionInvitationEntity {
+@Table(name = "home_criteria")
+public class HomeCriteriaEntity {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
     private int id;
 
     @NonNull
-    @JoinColumn(name="client_id")
-    @ManyToOne(optional = true)
-    private ClientEntity clientEntity;
-
-    @NonNull
-    @JoinColumn(name="agent_id")
-    @OneToOne(optional = false)
-    private AgentEntity agentEntity;
-
-    @NonNull
     @JoinColumn(name="transaction_id")
-    @OneToOne(optional = false)
+    @OneToOne(optional = true)
     private TransactionEntity transactionEntity;
 
-    @Column(name="transaction_invitation", columnDefinition = "ENUM('pending', 'accepted')")
-    @Enumerated(EnumType.STRING)
-    private TransactionInvitationStatusType transactionInvitationStatusType = TransactionInvitationStatusType.pending;
-
-    @Column(name = "accepted_timestamp")
-    private Timestamp acceptedTimestamp;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp

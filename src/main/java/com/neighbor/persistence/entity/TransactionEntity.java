@@ -14,14 +14,13 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "transaction_invitation")
-public class TransactionInvitationEntity {
+@Table(name = "transaction")
+public class TransactionEntity {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
     private int id;
 
-    @NonNull
     @JoinColumn(name="client_id")
     @ManyToOne(optional = true)
     private ClientEntity clientEntity;
@@ -30,11 +29,6 @@ public class TransactionInvitationEntity {
     @JoinColumn(name="agent_id")
     @OneToOne(optional = false)
     private AgentEntity agentEntity;
-
-    @NonNull
-    @JoinColumn(name="transaction_id")
-    @OneToOne(optional = false)
-    private TransactionEntity transactionEntity;
 
     @Column(name="transaction_invitation", columnDefinition = "ENUM('pending', 'accepted')")
     @Enumerated(EnumType.STRING)

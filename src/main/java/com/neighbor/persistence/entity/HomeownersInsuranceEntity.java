@@ -1,6 +1,5 @@
 package com.neighbor.persistence.entity;
 
-import com.neighbor.enums.TransactionInvitationStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,34 +13,18 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "transaction_invitation")
-public class TransactionInvitationEntity {
+@Table(name = "homeowners_insurance")
+public class HomeownersInsuranceEntity {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
     private int id;
 
     @NonNull
-    @JoinColumn(name="client_id")
-    @ManyToOne(optional = true)
-    private ClientEntity clientEntity;
-
-    @NonNull
-    @JoinColumn(name="agent_id")
-    @OneToOne(optional = false)
-    private AgentEntity agentEntity;
-
-    @NonNull
     @JoinColumn(name="transaction_id")
     @OneToOne(optional = false)
     private TransactionEntity transactionEntity;
 
-    @Column(name="transaction_invitation", columnDefinition = "ENUM('pending', 'accepted')")
-    @Enumerated(EnumType.STRING)
-    private TransactionInvitationStatusType transactionInvitationStatusType = TransactionInvitationStatusType.pending;
-
-    @Column(name = "accepted_timestamp")
-    private Timestamp acceptedTimestamp;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp
