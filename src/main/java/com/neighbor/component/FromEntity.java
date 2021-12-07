@@ -49,8 +49,8 @@ public class FromEntity {
     }
 
     public TransactionInvitation fromTransactionInvitationEntity(TransactionInvitationEntity transactionInvitationEntity) {
-        Client client = null;
-        if(Objects.isNull(transactionInvitationEntity.getClientEntity())) Client.builder().id(transactionInvitationEntity.getClientEntity().getId()).build()
+        Client client = Client.builder().build();
+        if(Objects.isNull(transactionInvitationEntity.getClientEntity())) Client.builder().id(transactionInvitationEntity.getClientEntity().getId()).build();
         return TransactionInvitation.builder()
                 .id(transactionInvitationEntity.getId())
                 .client(client)
