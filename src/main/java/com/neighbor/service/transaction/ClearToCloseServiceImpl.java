@@ -1,15 +1,15 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.AcceptedOffer;
+import com.neighbor.model.transaction.ClearToClose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AcceptedOfferServiceImpl implements AcceptedOfferService {
+public class ClearToCloseServiceImpl implements ClearToCloseService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -18,7 +18,7 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
     private final GetEntity getEntity;
 
     @Autowired
-    public AcceptedOfferServiceImpl(
+    public ClearToCloseServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -31,7 +31,7 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
     }
 
     @Override
-    public AcceptedOffer createAcceptedOffer(AcceptedOffer acceptedOffer) {
+    public ClearToClose createNewClearToClose(ClearToCloseService clearToCloseService) {
         return null;
     }
 
@@ -53,7 +53,6 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
 //        clientRepository.save(clientEntity);
 //        return fromEntity.fromClientEntity(clientEntity);
 //    }
-
 
 
 

@@ -1,10 +1,14 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.model.transaction.HomeInspection;
+import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
+import com.neighbor.persistence.entity.transaction.HomeInspectionEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.HomeInspectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,7 @@ public class HomeInspectionServiceImpl implements HomeInspectionService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
+    private final HomeInspectionRepository homeInspectionRepository;
 
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
@@ -21,18 +26,27 @@ public class HomeInspectionServiceImpl implements HomeInspectionService {
     public HomeInspectionServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
+            HomeInspectionRepository homeInspectionRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
+        this.homeInspectionRepository = homeInspectionRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }
 
     @Override
     public HomeInspection createHomeInspection(HomeInspection homeInspection) {
-        return null;
+        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+        HomeInspectionEntity homeInspectionEntity = new HomeInspectionEntity();
+        homeInspectionEntity.setTransactionEntity(transactionEntity);
+        homeInspectionRepository.save(homeInspectionEntity);
+
+        return fromEntity.fromHomeInspectionEntity(homeInspectionEntity);
+
     }
 
 //    @Override

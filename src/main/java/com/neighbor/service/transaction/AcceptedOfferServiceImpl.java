@@ -1,38 +1,55 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.HomeownersInsuance;
+import com.neighbor.model.transaction.AcceptedOffer;
+import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
+import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.AcceptedOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceService {
+public class AcceptedOfferServiceImpl implements AcceptedOfferService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
-
+    private final AcceptedOfferRepository acceptedOfferRepository;
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
     @Autowired
-    public HomeownersInsuranceServiceImpl(
+    public AcceptedOfferServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
+            AcceptedOfferRepository acceptedOfferRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
+        this.acceptedOfferRepository = acceptedOfferRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }
 
     @Override
-    public HomeownersInsuance createHomeInspection(HomeownersInsuance homeInspection) {
-        return null;
+    public AcceptedOffer createAcceptedOffer(AcceptedOffer acceptedOffer) {
+        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(acceptedOffer.getTransaction());
+//        PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
+//        preApprovalEntity.setTransactionEntity(transactionEntity);
+//        acceptedOfferRepository.save(preApprovalEntity);
+//        return fromEntity.fromPreApprovalCriteriaEntity(preApprovalEntity);
+        AcceptedOfferEntity acceptedOfferEntity = new AcceptedOfferEntity();
+        acceptedOfferEntity.setTransactionEntity(transactionEntity);
+        acceptedOfferRepository.save(acceptedOfferEntity);
+
+        return fromEntity.fromAcceptedOfferEntity(acceptedOfferEntity);
+
     }
 
 //    @Override
@@ -53,6 +70,7 @@ public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceServic
 //        clientRepository.save(clientEntity);
 //        return fromEntity.fromClientEntity(clientEntity);
 //    }
+
 
 
 

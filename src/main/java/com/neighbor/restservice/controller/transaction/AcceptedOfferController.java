@@ -1,9 +1,7 @@
 package com.neighbor.restservice.controller.transaction;
 
 import com.neighbor.model.transaction.AcceptedOffer;
-import com.neighbor.model.transaction.HomeCriteria;
-import com.neighbor.service.Transaction.AcceptedOfferService;
-import com.neighbor.service.Transaction.HomeCriteriaService;
+import com.neighbor.service.transaction.AcceptedOfferService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

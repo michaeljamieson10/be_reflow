@@ -1,7 +1,9 @@
 package com.neighbor.restservice.controller.transaction;
 
-import com.neighbor.model.transaction.ClearToClose;
-import com.neighbor.service.transaction.ClearToCloseService;
+import com.neighbor.model.transaction.Transaction;
+import com.neighbor.model.transaction.TransactionInvitation;
+import com.neighbor.service.transaction.TransactionInvitationService;
+import com.neighbor.service.transaction.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/clear_to_close")
-public class ClearToCloseController {
-    private final ClearToCloseService clearToCloseService;
+@RequestMapping("/v1/transaction")
+public class TransactionController {
+
+    private final TransactionService transactionService;
 
     @Autowired
-    public ClearToCloseController(ClearToCloseService clearToCloseService) {
-        this.clearToCloseService = clearToCloseService;
+    public TransactionController( TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
 //
 //    @ApiOperation(value = "Get user from access token.")
@@ -27,9 +30,10 @@ public class ClearToCloseController {
 //        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
 //    }
 
-    @ApiOperation(value = "Create a new ClearToCloseService")
+    @ApiOperation(value = "Create a new Transaction")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ClearToClose> createNewClearToClose(@RequestBody ClearToCloseService clearToCloseService) {
-        return new ResponseEntity<>(clearToCloseService.createNewClearToClose(clearToCloseService), HttpStatus.CREATED);
+    public ResponseEntity<Transaction> createNewTransactionInvitation(@RequestBody Transaction transaction) {
+        return new ResponseEntity<>(transactionService.createNewTransaction(transaction), HttpStatus.CREATED);
     }
+
 }

@@ -1,15 +1,15 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.Appraisal;
+import com.neighbor.model.transaction.FinalWalkthrough;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AppraisalServiceImpl implements AppraisalService {
+public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -18,7 +18,7 @@ public class AppraisalServiceImpl implements AppraisalService {
     private final GetEntity getEntity;
 
     @Autowired
-    public AppraisalServiceImpl(
+    public FinalWalkthroughServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -31,7 +31,7 @@ public class AppraisalServiceImpl implements AppraisalService {
     }
 
     @Override
-    public Appraisal createNewAppraisal(Appraisal appraisal) {
+    public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
         return null;
     }
 

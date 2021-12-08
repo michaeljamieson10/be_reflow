@@ -1,15 +1,15 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.ContractsSigned;
+import com.neighbor.model.transaction.HomeownersInsuance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ContractsSignedServiceImpl implements ContractsSignedService {
+public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -18,7 +18,7 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
     private final GetEntity getEntity;
 
     @Autowired
-    public ContractsSignedServiceImpl(
+    public HomeownersInsuranceServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -31,7 +31,7 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
     }
 
     @Override
-    public ContractsSigned createNewContractsSigned(ContractsSigned contractsSigned) {
+    public HomeownersInsuance createHomeInspection(HomeownersInsuance homeInspection) {
         return null;
     }
 

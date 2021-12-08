@@ -1,15 +1,15 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.LoanCommitment;
+import com.neighbor.model.transaction.Closing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoanCommitmentServiceImpl implements LoanCommitmentService {
+public class ClosingServiceImpl implements ClosingService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -18,7 +18,7 @@ public class LoanCommitmentServiceImpl implements LoanCommitmentService {
     private final GetEntity getEntity;
 
     @Autowired
-    public LoanCommitmentServiceImpl(
+    public ClosingServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -31,7 +31,7 @@ public class LoanCommitmentServiceImpl implements LoanCommitmentService {
     }
 
     @Override
-    public LoanCommitment createNewLoanCommitment(LoanCommitment loanCommitment) {
+    public Closing createNewClosing(Closing closing) {
         return null;
     }
 

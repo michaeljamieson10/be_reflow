@@ -1,46 +1,46 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.HomeCriteria;
-import com.neighbor.persistence.repository.ClientRepository;
-import com.neighbor.persistence.repository.UserRepository;
+import com.neighbor.model.transaction.ContractsSigned;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HomeCriteriaServiceImpl implements HomeCriteriaService {
+public class ContractsSignedServiceImpl implements ContractsSignedService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
-    private final UserRepository userRepository;
-    private final ClientRepository clientRepository;
+
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
     @Autowired
-    public HomeCriteriaServiceImpl(
+    public ContractsSignedServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
-            UserRepository userRepository,
-            ClientRepository clientRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
-        this.userRepository = userRepository;
-        this.clientRepository = clientRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }
 
     @Override
-    public HomeCriteria createNewHomeCriteria(HomeCriteria homeCriteria) {
+    public ContractsSigned createNewContractsSigned(ContractsSigned contractsSigned) {
         return null;
     }
+
+//    @Override
+//    public Client get(Client client) {
+//        permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
+//        ClientEntity clientEntity = getEntity.getClientEntity(client);
+//        return fromEntity.fromClientEntity(clientEntity);
+//    }
 
 //    @Override
 //    public Client createNewClient(Client client) {

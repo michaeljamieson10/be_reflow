@@ -1,9 +1,7 @@
 package com.neighbor.restservice.controller.transaction;
 
-import com.neighbor.model.transaction.ClearToClose;
 import com.neighbor.model.transaction.FinalWalkthrough;
-import com.neighbor.service.Transaction.ClearToCloseService;
-import com.neighbor.service.Transaction.FinalWalkthroughService;
+import com.neighbor.service.transaction.FinalWalkthroughService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

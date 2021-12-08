@@ -1,4 +1,4 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.model.transaction.HomeownersInsuance;
 

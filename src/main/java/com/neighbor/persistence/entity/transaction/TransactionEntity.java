@@ -31,10 +31,6 @@ public class TransactionEntity {
     @OneToOne(optional = false)
     private AgentEntity agentEntity;
 
-    @Column(name="transaction_invitation", columnDefinition = "ENUM('pending', 'accepted')")
-    @Enumerated(EnumType.STRING)
-    private TransactionInvitationStatusType transactionInvitationStatusType = TransactionInvitationStatusType.pending;
-
     @Column(name = "accepted_timestamp")
     private Timestamp acceptedTimestamp;
 

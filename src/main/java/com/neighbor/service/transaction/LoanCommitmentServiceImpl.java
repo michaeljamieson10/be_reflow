@@ -1,15 +1,15 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.FinalWalkthrough;
+import com.neighbor.model.transaction.LoanCommitment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
+public class LoanCommitmentServiceImpl implements LoanCommitmentService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
@@ -18,7 +18,7 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
     private final GetEntity getEntity;
 
     @Autowired
-    public FinalWalkthroughServiceImpl(
+    public LoanCommitmentServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
@@ -31,7 +31,7 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
     }
 
     @Override
-    public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
+    public LoanCommitment createNewLoanCommitment(LoanCommitment loanCommitment) {
         return null;
     }
 

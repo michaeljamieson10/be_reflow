@@ -1,9 +1,7 @@
 package com.neighbor.restservice.controller.transaction;
 
-import com.neighbor.model.transaction.Appraisal;
 import com.neighbor.model.transaction.LoanCommitment;
-import com.neighbor.service.Transaction.AppraisalService;
-import com.neighbor.service.Transaction.LoanCommitmentService;
+import com.neighbor.service.transaction.LoanCommitmentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

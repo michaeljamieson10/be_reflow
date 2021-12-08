@@ -1,12 +1,16 @@
-package com.neighbor.service.Transaction;
+package com.neighbor.service.transaction;
 
 import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.model.transaction.PreApproval;
+import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
+import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.ClientRepository;
 import com.neighbor.persistence.repository.UserRepository;
+import com.neighbor.persistence.repository.transaction.PreApprovalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,7 @@ public class PreApprovalServiceImpl implements PreApprovalService {
     private final AuthenticatedUserResolver authenticatedUserResolver;
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
+    private final PreApprovalRepository preApprovalRepository;
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
@@ -26,6 +31,7 @@ public class PreApprovalServiceImpl implements PreApprovalService {
             AuthenticatedUserResolver authenticatedUserResolver,
             UserRepository userRepository,
             ClientRepository clientRepository,
+            PreApprovalRepository preApprovalRepository,
             FromEntity fromEntity,
             GetEntity getEntity
             ){
@@ -33,13 +39,19 @@ public class PreApprovalServiceImpl implements PreApprovalService {
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.userRepository = userRepository;
         this.clientRepository = clientRepository;
+        this.preApprovalRepository = preApprovalRepository;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
     }
 
     @Override
     public PreApproval createNewPreApproval(PreApproval preApproval) {
-        return null;
+        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(preApproval.getTransaction());
+        PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
+        preApprovalEntity.setTransactionEntity(transactionEntity);
+        preApprovalRepository.save(preApprovalEntity);
+        return fromEntity.fromPreApprovalCriteriaEntity(preApprovalEntity);
     }
 
 //    @Override

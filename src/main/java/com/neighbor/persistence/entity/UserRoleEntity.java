@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name="user_role")
-public class UserRoleEntity{
+public class UserRoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy=   GenerationType.IDENTITY)
