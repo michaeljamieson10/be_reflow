@@ -87,6 +87,18 @@ public class GetEntity {
         if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(agent.getId());
         return agentEntity;
     }
+    public AgentEntity getAgentEntityByUserEntity(UserEntity userEntity) {
+        if(Objects.isNull(userEntity) || Objects.isNull(userEntity.getId())) throw new UserNotFoundException(0);
+        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(userEntity.getId());
+        return agentEntity;
+    }
+    public AgentEntity getAgentEntityByUserEntity_ID(UserEntity userEntity) {
+        if(Objects.isNull(userEntity) || Objects.isNull(userEntity.getId())) throw new UserNotFoundException(0);
+        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(userEntity.getId());
+        return agentEntity;
+    }
     public UserEntity getUserEntity(User user) {
         if(Objects.isNull(user) || Objects.isNull(user.getId())) throw new UserNotFoundException(0);
         UserEntity userEntity = userRepository.findById(user.getId()).orElse(null);

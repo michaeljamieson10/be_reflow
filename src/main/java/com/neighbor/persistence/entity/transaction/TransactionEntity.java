@@ -27,12 +27,17 @@ public class TransactionEntity {
     private ClientEntity clientEntity;
 
     @NonNull
+    @Column(name = "first_name")
+    private String firstName;
+
+    @NonNull
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NonNull
     @JoinColumn(name="agent_id")
     @OneToOne(optional = false)
     private AgentEntity agentEntity;
-
-    @Column(name = "accepted_timestamp")
-    private Timestamp acceptedTimestamp;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp

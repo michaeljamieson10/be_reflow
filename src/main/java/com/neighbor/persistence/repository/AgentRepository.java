@@ -13,5 +13,6 @@ import java.util.List;
 @Transactional
 public interface AgentRepository extends JpaRepository<AgentEntity, Integer> {
     AgentEntity findByUserEntity(UserEntity userEntity);
+    AgentEntity findByUserEntity_Id(Integer id);
 }
 

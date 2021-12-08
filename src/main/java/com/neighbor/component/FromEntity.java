@@ -56,11 +56,18 @@ public class FromEntity {
                 .updatedTimestamp(transactionInvitationEntity.getUpdatedTimestamp())
                 .build();
     }
+    public Transaction fromTransactionEntity(TransactionEntity transactionEntity, AgentEntity agentEntity){
+        return fromTransactionEntity(transactionEntity, agentEntity);
+    }
     public Transaction fromTransactionEntity(TransactionEntity transactionEntity) {
+        return fromTransactionEntity(transactionEntity, null, null);
+    }
+    public Transaction fromTransactionEntity(TransactionEntity transactionEntity,AgentEntity agentEntity, ClientEntity clientEntity) {
         Agent agent = Agent.builder().build();
         Client client = Client.builder().build();
-        if(Objects.isNull(transactionEntity.getAgentEntity()))agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();
-        if(Objects.isNull(transactionEntity.getClientEntity()))client = Client.builder().id(transactionEntity.getClientEntity().getId()).build();
+//        ClientEntity clientEntity = transactionEntity.getClientEntity();
+        if(Objects.isNull(agentEntity)){agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();}
+        if(Objects.isNull(clientEntity)){client = Client.builder().id(transactionEntity.getClientEntity().getId()).build();}
         return Transaction.builder()
                 .id(transactionEntity.getId())
                 .client(client)
@@ -69,6 +76,7 @@ public class FromEntity {
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
                 .build();
     }
+
     public HomeCriteria fromHomeCriteriaEntity(HomeCriteriaEntity homeCriteriaEntity){
         return HomeCriteria.builder()
                 .id(homeCriteriaEntity.getId())
