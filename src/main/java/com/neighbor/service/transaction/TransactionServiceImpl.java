@@ -14,6 +14,8 @@ import com.neighbor.persistence.entity.ClientEntity;
 import com.neighbor.persistence.entity.UserEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.entity.transaction.TransactionInvitationEntity;
+import com.neighbor.persistence.repository.AgentRepository;
+import com.neighbor.persistence.repository.ClientRepository;
 import com.neighbor.persistence.repository.transaction.TransactionInvitationRepository;
 import com.neighbor.persistence.repository.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
+    private final AgentRepository agentRepository;
+    private final ClientRepository clientRepository;
     private final GetEntity getEntity;
     private final FromEntity fromEntity;
 
@@ -33,6 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionServiceImpl(TransactionRepository transactionRepository,
                                   PermissionsValidator permissionsValidator,
                                   AuthenticatedUserResolver authenticatedUserResolver,
+                                  AgentRepository agentRepository,
+                                  ClientRepository clientRepository,
                                   GetEntity getEntity,
                                   FromEntity fromEntity){
         this.transactionRepository = transactionRepository;
@@ -40,6 +46,8 @@ public class TransactionServiceImpl implements TransactionService {
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.agentRepository = agentRepository;
+        this.clientRepository = clientRepository;
     }
     @Override
     public Transaction createNewTransaction(Transaction transaction) {
@@ -47,10 +55,19 @@ public class TransactionServiceImpl implements TransactionService {
 //        ClientEntity clientEntity = getEntity.getClientEntity(transaction.getClient());
 //        UserEntity userEntity = getEntity.getUserEntity(transaction.g);
 //        AgentEntity agentEntity = getEntity.getAgentEntityByUserEntity_Id(transaction.getAgent().getId());
-        AgentEntity agentEntity = getEntity.getAgentEntity(transaction.getAgent());
+//        AgentEntity agentEntity = getEntity.getAgentEntity(transaction.getAgent());
 //        AgentEntity agentEntity = getEntity.getAgentEntityByUserEntity(transaction.getAgent());
+        UserEntity userEntity = authenticatedUserResolver.user();
+//        ClientEntity clientEntity = clientRepository.findByUserEntity(userEntity);
+        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        ClientEntity clientEntity = clientRepository.findByUserEntity(userEntity);
+
         TransactionEntity transactionEntity = new TransactionEntity();
-        transactionEntity.setAgentEntity(agentEntity);
+
+        if(Objects.nonNull(agentEntity))transactionEntity.setAgentEntity(agentEntity);
+        if(Objects.nonNull(clientEntity))transactionEntity.setClientEntity(clientEntity);
+
+
         transactionEntity.setFirstName(transaction.getFirstName());
         transactionEntity.setLastName(transaction.getLastName());
         transactionEntity = transactionRepository.save(transactionEntity);
