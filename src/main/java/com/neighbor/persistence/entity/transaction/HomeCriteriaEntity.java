@@ -25,12 +25,8 @@ public class HomeCriteriaEntity {
 
     @NonNull
     @JoinColumn(name="transaction_id")
-    @OneToOne(optional = true)
+    @OneToOne(optional = false)
     private TransactionEntity transactionEntity;
-
-    @NonNull
-    @Column(name = "first_name")
-    private String firstName;
 
     @Column(name="status", columnDefinition = "ENUM('not_started', 'in_progress', 'completed')")
     @Enumerated(EnumType.STRING)
