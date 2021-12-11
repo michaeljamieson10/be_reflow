@@ -21,7 +21,9 @@ import com.neighbor.persistence.repository.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -83,6 +85,19 @@ public class TransactionServiceImpl implements TransactionService {
                 .build();
     }
 
+    @Override
+    public List<Transaction> getTransactionsListByAgent(int agentId) {
+        UserEntity userEntity = authenticatedUserResolver.user();
+//        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        AgentEntity agentEntity= agentRepository.findById(agentId).orElse(null);
+
+        List<TransactionEntity> transactionEntityList = transactionRepository.findTransactionEntityByAgentEntity(agentEntity);
+
+//        ClientEntity clientEntity = clientRepository.findByUserEntity(userEntity);
+
+        return fromTransactionList(transactionEntityList);
+    }
+
     public Transaction fromTransactionEntity(TransactionEntity transactionEntity,AgentEntity agentEntity, ClientEntity clientEntity) {
         Agent agent = Agent.builder().build();
         Client client = Client.builder().build();
@@ -97,5 +112,20 @@ public class TransactionServiceImpl implements TransactionService {
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
                 .build();
     }
+    public Transaction fromTransactionEntity(TransactionEntity transactionEntity) {
+        Agent agent = Agent.builder().build();
+        Client client = Client.builder().build();
+//        ClientEntity clientEntity = transactionEntity.getClientEntity();
+        return Transaction.builder()
+                .id(transactionEntity.getId())
+                .client(client)
+                .agent(agent)
+                .createdTimetamp(transactionEntity.getCreatedTimestamp())
+                .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
+                .build();
+    }
+    public List<Transaction> fromTransactionList( List<TransactionEntity> transactionEntityList){
+        return transactionEntityList.stream().map(this::fromTransactionEntity).collect(Collectors.toList());
+    };
 
 }

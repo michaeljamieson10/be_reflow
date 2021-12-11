@@ -1,17 +1,15 @@
 package com.neighbor.restservice.controller.transaction;
 
+import com.neighbor.model.Agent;
 import com.neighbor.model.transaction.Transaction;
-import com.neighbor.model.transaction.TransactionInvitation;
-import com.neighbor.service.transaction.TransactionInvitationService;
 import com.neighbor.service.transaction.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/transaction")
@@ -34,6 +32,11 @@ public class TransactionController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Transaction> createNewTransactionInvitation(@RequestBody Transaction transaction) {
         return new ResponseEntity<>(transactionService.createNewTransaction(transaction), HttpStatus.CREATED);
+    }
+    @ApiOperation("Get list transactions by either by agent or client")
+    @RequestMapping(method = RequestMethod.GET, value="/list")
+    public ResponseEntity<List<Transaction>> getTransactionsListByAgent(@RequestParam(name="agent_id") int agentId){
+        return new ResponseEntity<>(transactionService.getTransactionsListByAgent(agentId), HttpStatus.OK);
     }
 
 }
