@@ -4,5 +4,6 @@ import com.neighbor.model.Agent;
 
 public interface AgentService {
     Agent createNewAgent(Agent agent);
+    Agent get();
 
 }

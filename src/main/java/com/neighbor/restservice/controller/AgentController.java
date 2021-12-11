@@ -25,12 +25,12 @@ public class AgentController {
     public AgentController(AgentService agentService) {
         this.agentService = agentService;
     }
-//
-//    @ApiOperation(value = "Get user from access token.")
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<User> get() {
-//        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
-//    }
+
+    @ApiOperation(value = "Get agent from user from access token.")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Agent> get() {
+        return new ResponseEntity<>(agentService.get(), HttpStatus.OK);
+    }
 
     @ApiOperation(value = "Create a new agent.")
     @RequestMapping(method = RequestMethod.POST)

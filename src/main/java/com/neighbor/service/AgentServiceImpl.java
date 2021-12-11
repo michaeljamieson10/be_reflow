@@ -4,6 +4,7 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.exception.AgentNotFoundException;
 import com.neighbor.exception.EntityMissingParametersException;
 import com.neighbor.exception.UserNotFoundException;
 import com.neighbor.model.Agent;
@@ -46,12 +47,20 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public Agent createNewAgent(Agent agent) {
 //        permissionsValidator.validateSystemAdministrator(authenticatedUserResolver.user());
-        if(Objects.isNull(agent.getUser())) throw new EntityMissingParametersException(Agent.class, "user");
+        if(Objects.isNull(agent.getUser()))  throw new EntityMissingParametersException(Agent.class, "user");
         UserEntity userEntity = getEntity.getUserEntity(agent.getUser());
         AgentEntity agentEntity = new AgentEntity();
         agentEntity.setUserEntity(userEntity);
         agentEntity.setActive(true);
         agentRepository.save(agentEntity);
+        return fromEntity.fromAgentEntity(agentEntity);
+    }
+
+    @Override
+    public Agent get() {
+        UserEntity userEntity = authenticatedUserResolver.user();
+        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(0);
         return fromEntity.fromAgentEntity(agentEntity);
     }
 
