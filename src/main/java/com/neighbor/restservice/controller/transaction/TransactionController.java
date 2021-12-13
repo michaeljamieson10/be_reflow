@@ -21,12 +21,12 @@ public class TransactionController {
     public TransactionController( TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-//
-//    @ApiOperation(value = "Get user from access token.")
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<User> get() {
-//        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
-//    }
+
+    @ApiOperation(value = "Get transaction from id.")
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    public ResponseEntity<Transaction> get(@PathVariable("id") int transactionId) {
+        return new ResponseEntity<>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
+    }
 
     @ApiOperation(value = "Create a new Transaction")
     @RequestMapping(method = RequestMethod.POST)

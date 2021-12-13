@@ -5,6 +5,7 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionInvitationStatusType;
+import com.neighbor.exception.TransactionNotFoundException;
 import com.neighbor.model.Agent;
 import com.neighbor.model.Client;
 import com.neighbor.model.transaction.Transaction;
@@ -98,6 +99,14 @@ public class TransactionServiceImpl implements TransactionService {
         return fromTransactionList(transactionEntityList);
     }
 
+    @Override
+    public Transaction getTransactionById(int transactionId) {
+        UserEntity userEntity = authenticatedUserResolver.user();
+        TransactionEntity transactionEntity = transactionRepository.findById(transactionId).orElse(null);
+        if(Objects.isNull(transactionEntity)) throw new TransactionNotFoundException(transactionId);
+        return fromTransactionEntity(transactionEntity);
+    }
+
     public Transaction fromTransactionEntity(TransactionEntity transactionEntity,AgentEntity agentEntity, ClientEntity clientEntity) {
         Agent agent = Agent.builder().build();
         Client client = Client.builder().build();
@@ -114,10 +123,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
     public Transaction fromTransactionEntity(TransactionEntity transactionEntity) {
         Agent agent = Agent.builder().build();
+        if(Objects.nonNull(transactionEntity.getAgentEntity())) agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();
         Client client = Client.builder().build();
 //        ClientEntity clientEntity = transactionEntity.getClientEntity();
         return Transaction.builder()
                 .id(transactionEntity.getId())
+                .firstName(transactionEntity.getFirstName())
+                .lastName(transactionEntity.getLastName())
                 .client(client)
                 .agent(agent)
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
