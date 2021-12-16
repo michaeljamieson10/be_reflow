@@ -66,8 +66,8 @@ public class FromEntity {
         Agent agent = Agent.builder().build();
         Client client = Client.builder().build();
 //        ClientEntity clientEntity = transactionEntity.getClientEntity();
-        if(Objects.isNull(agentEntity)){agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();}
-        if(Objects.isNull(clientEntity)){client = Client.builder().id(transactionEntity.getClientEntity().getId()).build();}
+        if(Objects.nonNull(agentEntity)){agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();}
+        if(Objects.nonNull(clientEntity)){client = Client.builder().id(transactionEntity.getClientEntity().getId()).build();}
         return Transaction.builder()
                 .id(transactionEntity.getId())
                 .client(client)

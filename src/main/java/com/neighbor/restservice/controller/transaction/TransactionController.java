@@ -28,6 +28,17 @@ public class TransactionController {
         return new ResponseEntity<>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get transaction with flows from id.")
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}/flows")
+    public ResponseEntity<Transaction> getTransactionWithFlows(@PathVariable("id") int transactionId) {
+        return new ResponseEntity<>(transactionService.getTransactionFlows(transactionId), HttpStatus.OK);
+    }
+//    @ApiOperation(value = "Get transaction flows complete from id.")
+//    @RequestMapping(method = RequestMethod.GET, path = "/{id}/flows")
+//    public ResponseEntity<Transaction> getTransactionFlowsComplete(@PathVariable("id") int transactionId) {
+//        return new ResponseEntity<>(transactionService.getTransactionFlowsComplete(transactionId), HttpStatus.OK);
+//    }
+
     @ApiOperation(value = "Create a new Transaction")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Transaction> createNewTransactionInvitation(@RequestBody Transaction transaction) {

@@ -19,6 +19,18 @@ public class Transaction {
     private Client client;
     private String firstName;
     private String lastName;
+    private HomeCriteria homeCriteria;
+    private PreApproval preApproval;
+    private AcceptedOffer acceptedOffer;
+    private HomeInspection homeInspection;
+    private ContractsSigned contractsSigned;
+    private Appraisal appraisal;
+    private LoanCommitment loanCommitment;
+    private HomeownersInsuance homeownersInsuance;
+    private ClearToClose clearToClose;
+    private FinalWalkthrough finalWalkthrough;
+    private Closing closing;
+    private int transactionsComplete;
     private Timestamp createdTimetamp;
     private Timestamp updatedTimestamp;
 }

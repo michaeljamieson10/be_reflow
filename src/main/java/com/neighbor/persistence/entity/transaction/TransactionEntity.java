@@ -39,6 +39,7 @@ public class TransactionEntity {
     @OneToOne(optional = false)
     private AgentEntity agentEntity;
 
+
     @Column(name = "created_timestamp")
     @CreationTimestamp
     private Timestamp createdTimestamp;

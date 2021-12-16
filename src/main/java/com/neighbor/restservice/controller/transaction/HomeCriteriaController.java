@@ -30,7 +30,7 @@ public class HomeCriteriaController {
 
     @ApiOperation(value = "Create a new homeCriteria")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HomeCriteria> createNewTransactionInvitation(@RequestBody HomeCriteria homeCriteria) {
+    public ResponseEntity<HomeCriteria> createNewHomeCriteria(@RequestBody HomeCriteria homeCriteria) {
         return new ResponseEntity<>(homeCriteriaService.createNewHomeCriteria(homeCriteria), HttpStatus.CREATED);
     }
 

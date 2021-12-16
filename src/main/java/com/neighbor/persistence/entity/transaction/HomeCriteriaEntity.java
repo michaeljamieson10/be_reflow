@@ -1,9 +1,8 @@
 package com.neighbor.persistence.entity.transaction;
 
-import com.neighbor.enums.HomeCriteriaStatusType;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.enums.PriceByHundredIncrementType;
 import com.neighbor.enums.RoomAmountType;
-import com.neighbor.enums.TransactionInvitationStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -30,7 +29,7 @@ public class HomeCriteriaEntity {
 
     @Column(name="status", columnDefinition = "ENUM('not_started', 'in_progress', 'completed')")
     @Enumerated(EnumType.STRING)
-    private HomeCriteriaStatusType homeCriteriaStatusType = HomeCriteriaStatusType.in_progress;
+    private TransactionStatusType transactionStatusType = TransactionStatusType.in_progress;
 
     @Column(name="price_min", columnDefinition = "ENUM('one_hundred','two_hundred','three_hundred','four_hundred','five_hundred','six_hundred','seven_hundred','eight_hundred','nine_hundred','one_million')")
     @Enumerated(EnumType.STRING)

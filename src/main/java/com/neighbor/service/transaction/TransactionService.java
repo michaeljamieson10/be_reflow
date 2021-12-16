@@ -7,6 +7,13 @@ import java.util.List;
 
 public interface TransactionService {
     Transaction createNewTransaction(Transaction transaction);
+
     List<Transaction> getTransactionsListByAgent(int agentId);
+
     Transaction getTransactionById(int transactionId);
+
+    Transaction getTransactionFlowsComplete(int transactionId);
+
+    Transaction getTransactionFlows(int transactionId);
+
 }

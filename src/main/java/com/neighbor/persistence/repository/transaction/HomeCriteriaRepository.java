@@ -1,6 +1,7 @@
 package com.neighbor.persistence.repository.transaction;
 
 import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.entity.transaction.TransactionInvitationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -10,4 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface HomeCriteriaRepository extends JpaRepository<HomeCriteriaEntity, Integer> {
+    HomeCriteriaEntity findByTransactionEntity(TransactionEntity transactionEntity);
 }

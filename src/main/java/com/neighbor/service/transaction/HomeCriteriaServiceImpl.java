@@ -4,6 +4,7 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.HomeCriteria;
 import com.neighbor.persistence.entity.AgentEntity;
 import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
@@ -51,10 +52,12 @@ public class HomeCriteriaServiceImpl implements HomeCriteriaService {
     @Override
     public HomeCriteria createNewHomeCriteria(HomeCriteria homeCriteria) {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeCriteria.getTransaction());
-        AgentEntity agentEntity = getEntity.getAgentEntity(homeCriteria.getTransaction().getAgent());
+//        AgentEntity agentEntity = getEntity.getAgentEntity(homeCriteria.getTransaction().getAgent());
 //        permissionsValidator.validateCorrectUserEntity(transactionEntity.getAgentEntity().getUserEntity(), agentEntity.getUserEntity());
         HomeCriteriaEntity homeCriteriaEntity = new HomeCriteriaEntity();
         homeCriteriaEntity.setTransactionEntity(transactionEntity);
+
+        homeCriteriaEntity.setTransactionStatusType(TransactionStatusType.completed);//todo:remove this later on
         homeCriteriaRepository.save(homeCriteriaEntity);
         return fromEntity.fromHomeCriteriaEntity(homeCriteriaEntity);
     }

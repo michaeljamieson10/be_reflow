@@ -1,6 +1,6 @@
 package com.neighbor.enums;
 
 
-public enum HomeCriteriaStatusType {
+public enum TransactionStatusType {
     not_started, in_progress,completed
 }
