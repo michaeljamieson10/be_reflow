@@ -16,6 +16,8 @@ import com.neighbor.persistence.repository.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class HomeCriteriaServiceImpl implements HomeCriteriaService {
 
@@ -54,8 +56,29 @@ public class HomeCriteriaServiceImpl implements HomeCriteriaService {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeCriteria.getTransaction());
 //        AgentEntity agentEntity = getEntity.getAgentEntity(homeCriteria.getTransaction().getAgent());
 //        permissionsValidator.validateCorrectUserEntity(transactionEntity.getAgentEntity().getUserEntity(), agentEntity.getUserEntity());
+        //TODO: Check if already exist throw error
         HomeCriteriaEntity homeCriteriaEntity = new HomeCriteriaEntity();
         homeCriteriaEntity.setTransactionEntity(transactionEntity);
+
+        if(Objects.nonNull(homeCriteria.getMinPrice())) homeCriteriaEntity.setMinimumPrice(homeCriteria.getMinPrice());
+        if(Objects.nonNull(homeCriteria.getMaxPrice())) homeCriteriaEntity.setMaximumPrice(homeCriteria.getMaxPrice());
+        if(Objects.nonNull(homeCriteria.getAmountOfBed())) homeCriteriaEntity.setAmountOfBeds(homeCriteria.getAmountOfBed());
+        if(Objects.nonNull(homeCriteria.getAmountOfBath())) homeCriteriaEntity.setAmountOfBaths(homeCriteria.getAmountOfBath());
+        if(Objects.nonNull(homeCriteria.getHouse())) homeCriteriaEntity.setHouse(homeCriteria.getHouse());
+        if(Objects.nonNull(homeCriteria.getMultifamily())) homeCriteriaEntity.setMultifamily(homeCriteria.getMultifamily());
+        if(Objects.nonNull(homeCriteria.getMultifamily())) homeCriteriaEntity.setMultifamily(homeCriteria.getMultifamily());
+        if(Objects.nonNull(homeCriteria.getCondocoop())) homeCriteriaEntity.setCondocoop(homeCriteria.getCondocoop());
+        if(Objects.nonNull(homeCriteria.getTownhome())) homeCriteriaEntity.setTownhome(homeCriteria.getTownhome());
+        if(Objects.nonNull(homeCriteria.getBasement())) homeCriteriaEntity.setBasement(homeCriteria.getBasement());
+        if(Objects.nonNull(homeCriteria.getCentralair())) homeCriteriaEntity.setCentralair(homeCriteria.getCentralair());
+        if(Objects.nonNull(homeCriteria.getPool())) homeCriteriaEntity.setPool(homeCriteria.getPool());
+        if(Objects.nonNull(homeCriteria.getWaterfront())) homeCriteriaEntity.setWaterfront(homeCriteria.getWaterfront());
+        if(Objects.nonNull(homeCriteria.getCityOne())) homeCriteriaEntity.setCityOne(homeCriteria.getCityOne());
+        if(Objects.nonNull(homeCriteria.getCityTwo())) homeCriteriaEntity.setCityTwo(homeCriteria.getCityTwo());
+        if(Objects.nonNull(homeCriteria.getCityThree())) homeCriteriaEntity.setCityThree(homeCriteria.getCityThree());
+        if(Objects.nonNull(homeCriteria.getCityFour())) homeCriteriaEntity.setCityFour(homeCriteria.getCityFour());
+        if(Objects.nonNull(homeCriteria.getCityFive())) homeCriteriaEntity.setCityFive(homeCriteria.getCityFive());
+
 
         homeCriteriaEntity.setTransactionStatusType(TransactionStatusType.completed);//todo:remove this later on
         homeCriteriaRepository.save(homeCriteriaEntity);
