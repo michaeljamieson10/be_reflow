@@ -16,4 +16,6 @@ public interface TransactionService {
 
     Transaction getTransactionFlows(int transactionId);
 
+    List<Transaction> getTransactionsListByUserToken();
+
 }

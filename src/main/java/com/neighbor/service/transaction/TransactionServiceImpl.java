@@ -136,11 +136,25 @@ public class TransactionServiceImpl implements TransactionService {
 
         return fromTransactionList(transactionEntityList);
     }
+
+    @Override
+    public List<Transaction> getTransactionsListByUserToken() {
+        UserEntity userEntity = authenticatedUserResolver.user();
+        AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
+        List<TransactionEntity> transactionEntityList = null;
+        if(Objects.nonNull(agentEntity)){
+            transactionEntityList = transactionRepository.findTransactionEntityByAgentEntity(agentEntity);
+        }else{
+            ClientEntity clientEntity = clientRepository.findByUserEntity(userEntity);
+            transactionEntityList = transactionRepository.findTransactionEntityByClientEntity(clientEntity);
+        }
+        return fromTransactionList(transactionEntityList);
+    }
+
     @Override
     public Transaction getTransactionById(int transactionId) {
         UserEntity userEntity = authenticatedUserResolver.user();
         TransactionEntity transactionEntity = transactionRepository.findById(transactionId).orElse(null);
-
         return fromTransactionEntity(transactionEntity);
     }
 

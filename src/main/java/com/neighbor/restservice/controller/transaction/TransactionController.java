@@ -22,11 +22,18 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @ApiOperation(value = "Get transactions from id.")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Transaction>> getTransactionsListByUserToken() {
+        return new ResponseEntity<>(transactionService.getTransactionsListByUserToken(), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Get transaction from id.")
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public ResponseEntity<Transaction> get(@PathVariable("id") int transactionId) {
         return new ResponseEntity<>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
     }
+
 
     @ApiOperation(value = "Get transaction with flows from id.")
     @RequestMapping(method = RequestMethod.GET, path = "/{id}/flows")
