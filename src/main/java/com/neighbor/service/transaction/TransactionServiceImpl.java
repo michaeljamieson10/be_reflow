@@ -9,17 +9,11 @@ import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.exception.TransactionNotFoundException;
 import com.neighbor.model.Agent;
 import com.neighbor.model.Client;
-import com.neighbor.model.transaction.HomeCriteria;
-import com.neighbor.model.transaction.PreApproval;
-import com.neighbor.model.transaction.Transaction;
-import com.neighbor.model.transaction.TransactionInvitation;
+import com.neighbor.model.transaction.*;
 import com.neighbor.persistence.entity.AgentEntity;
 import com.neighbor.persistence.entity.ClientEntity;
 import com.neighbor.persistence.entity.UserEntity;
-import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
-import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
-import com.neighbor.persistence.entity.transaction.TransactionEntity;
-import com.neighbor.persistence.entity.transaction.TransactionInvitationEntity;
+import com.neighbor.persistence.entity.transaction.*;
 import com.neighbor.persistence.repository.AgentRepository;
 import com.neighbor.persistence.repository.ClientRepository;
 import com.neighbor.persistence.repository.transaction.*;
@@ -190,7 +184,13 @@ public class TransactionServiceImpl implements TransactionService {
             preApproval = PreApproval.builder().id(preApprovalEntity.getId()).transactionStatusType(preApprovalEntity.getTransactionStatusType()).build();
         }
 
-        //we need to find some sort of way to tell them that it is in progress or completed in order to change the color
+        AcceptedOfferEntity acceptedOfferEntity = acceptedOfferRepository.findByTransactionEntity(transactionEntity);
+        AcceptedOffer acceptedOffer = AcceptedOffer.builder().build();;
+        if(Objects.nonNull(acceptedOfferEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(acceptedOfferEntity.getTransactionStatusType(),transactionsComplete);
+            acceptedOffer = AcceptedOffer.builder().id(acceptedOfferEntity.getId()).transactionStatusType(acceptedOfferEntity.getTransactionStatusType()).build();
+        }
+        //TODO: FIND A WAY TO CHANGE THE COLOR FOR COMPLETED OR IN PROGRESS
         //you actually just need to do this with transaction complet.
         //then pass it on the transaciton object status type
 
@@ -207,6 +207,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .agent(agent)
                 .homeCriteria(homeCriteria)
                 .preApproval(preApproval)
+                .acceptedOffer(acceptedOffer)
                 .transactionsComplete(transactionsComplete)
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
