@@ -4,8 +4,8 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.PreApproval;
-import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
 import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.ClientRepository;
@@ -46,10 +46,16 @@ public class PreApprovalServiceImpl implements PreApprovalService {
 
     @Override
     public PreApproval createNewPreApproval(PreApproval preApproval) {
-        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
+//        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(preApproval.getTransaction());
         PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
         preApprovalEntity.setTransactionEntity(transactionEntity);
+        preApprovalEntity.setMaxPurchasePrice(preApproval.getMaxPurchasePrice());
+        preApprovalEntity.setMaxLoanAmount(preApproval.getMaxLoanAmount());
+        preApprovalEntity.setMaxTaxes(preApproval.getMaxPropertyTaxes());
+        preApprovalEntity.setDownPayment(preApproval.getDownPayment());
+        preApprovalEntity.setLoanType(preApproval.getLoanType());
+        preApprovalEntity.setTransactionStatusType(TransactionStatusType.completed);
         preApprovalRepository.save(preApprovalEntity);
         return fromEntity.fromPreApprovalCriteriaEntity(preApprovalEntity);
     }
