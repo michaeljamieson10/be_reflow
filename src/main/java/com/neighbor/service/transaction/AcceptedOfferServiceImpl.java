@@ -4,6 +4,7 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.AcceptedOffer;
 import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
 import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
@@ -38,7 +39,7 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
 
     @Override
     public AcceptedOffer createAcceptedOffer(AcceptedOffer acceptedOffer) {
-        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
+//        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(acceptedOffer.getTransaction());
 //        PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
 //        preApprovalEntity.setTransactionEntity(transactionEntity);
@@ -46,6 +47,11 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
 //        return fromEntity.fromPreApprovalCriteriaEntity(preApprovalEntity);
         AcceptedOfferEntity acceptedOfferEntity = new AcceptedOfferEntity();
         acceptedOfferEntity.setTransactionEntity(transactionEntity);
+        acceptedOfferEntity.setAddress(acceptedOffer.getAddress());
+        acceptedOfferEntity.setPurchasePrice(acceptedOffer.getPurchasePrice());
+        acceptedOfferEntity.setPropertyTaxes(acceptedOffer.getPropertyTaxes());
+        acceptedOfferEntity.setDownPayment(acceptedOffer.getDownPayment());
+        acceptedOfferEntity.setTransactionStatusType(TransactionStatusType.completed);
         acceptedOfferRepository.save(acceptedOfferEntity);
 
         return fromEntity.fromAcceptedOfferEntity(acceptedOfferEntity);
