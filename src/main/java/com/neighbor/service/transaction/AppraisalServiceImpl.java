@@ -4,9 +4,15 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.Appraisal;
+import com.neighbor.persistence.entity.transaction.AppraisalEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.AppraisalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
 
 @Service
 public class AppraisalServiceImpl implements AppraisalService {
@@ -17,21 +23,35 @@ public class AppraisalServiceImpl implements AppraisalService {
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
+    private final AppraisalRepository appraisalRepository;
+
     @Autowired
     public AppraisalServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            AppraisalRepository appraisalRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.appraisalRepository = appraisalRepository;
     }
 
     @Override
     public Appraisal createNewAppraisal(Appraisal appraisal) {
+
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(appraisal.getTransaction());
+
+        AppraisalEntity appraisalEntity = new AppraisalEntity();
+        appraisalEntity.setTransactionEntity(transactionEntity);
+        appraisalEntity.setAppraisedDateTime(new Timestamp(appraisal.getDateTimeMilli()));
+        appraisalEntity.setAppraisedValue(appraisal.getAppraisedValue());
+        appraisalEntity.setTransactionStatusType(TransactionStatusType.completed);
+        appraisalRepository.save(appraisalEntity);
+
         return null;
     }
 

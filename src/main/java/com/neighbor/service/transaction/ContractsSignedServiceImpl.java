@@ -4,7 +4,11 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.ContractsSigned;
+import com.neighbor.persistence.entity.transaction.ContractsSignedEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.ContractsSignedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,7 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
 
     private final PermissionsValidator permissionsValidator;
     private final AuthenticatedUserResolver authenticatedUserResolver;
+    private final ContractsSignedRepository contractsSignedRepository;
 
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
@@ -22,17 +27,28 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            ContractsSignedRepository contractsSignedRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.contractsSignedRepository = contractsSignedRepository;
     }
 
     @Override
     public ContractsSigned createNewContractsSigned(ContractsSigned contractsSigned) {
-        return null;
+
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(contractsSigned.getTransaction());
+
+        ContractsSignedEntity contractsSignedEntity = new ContractsSignedEntity();
+        contractsSignedEntity.setTransactionEntity(transactionEntity);
+        contractsSignedEntity.setBuyerStatus(contractsSigned.getBuyerStatus());
+        contractsSignedEntity.setSellerStatus(contractsSigned.getSellerStatus());
+        contractsSignedEntity.setTransactionStatusType(TransactionStatusType.completed);
+        contractsSignedEntity = contractsSignedRepository.save(contractsSignedEntity);
+        return ContractsSigned.builder().buyerStatus(contractsSignedEntity.getBuyerStatus()).sellerStatus(contractsSigned.getSellerStatus()).build();
     }
 
 //    @Override
@@ -42,17 +58,6 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
 //        return fromEntity.fromClientEntity(clientEntity);
 //    }
 
-//    @Override
-//    public Client createNewClient(Client client) {
-////        permissionsValidator.validateAgentOrSystemAdmin(authenticatedUserResolver.user());
-//        if(Objects.isNull(client.getUser())) throw new EntityMissingParametersException(Client.class, "user");
-//        UserEntity userEntity = getEntity.getUserEntity(client.getUser());
-//        ClientEntity clientEntity = new ClientEntity();
-//        clientEntity.setUserEntity(userEntity);
-//        clientEntity.setActive(true);
-//        clientRepository.save(clientEntity);
-//        return fromEntity.fromClientEntity(clientEntity);
-//    }
 
 
 

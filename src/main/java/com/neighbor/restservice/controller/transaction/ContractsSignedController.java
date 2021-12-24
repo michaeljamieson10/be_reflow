@@ -20,12 +20,6 @@ public class ContractsSignedController {
     public ContractsSignedController(ContractsSignedService contractsSignedService) {
         this.contractsSignedService = contractsSignedService;
     }
-//
-//    @ApiOperation(value = "Get user from access token.")
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<User> get() {
-//        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
-//    }
 
     @ApiOperation(value = "Create a new ContractsSigned")
     @RequestMapping(method = RequestMethod.POST)

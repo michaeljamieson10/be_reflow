@@ -197,6 +197,13 @@ public class TransactionServiceImpl implements TransactionService {
             transactionsComplete = getTransactionTypeAndIncrement(homeInspectionEntity.getTransactionStatusType(),transactionsComplete);
             homeInspection = HomeInspection.builder().id(homeInspectionEntity.getId()).transactionStatusType(homeInspectionEntity.getTransactionStatusType()).build();
         }
+
+        ContractsSignedEntity contractsSignedEntity = contractsSignedRepository.findByTransactionEntity(transactionEntity);
+        ContractsSigned contractsSigned = ContractsSigned.builder().build();;
+        if(Objects.nonNull(contractsSignedEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(homeInspectionEntity.getTransactionStatusType(),transactionsComplete);
+            contractsSigned = ContractsSigned.builder().id(contractsSignedEntity.getId()).transactionStatusType(contractsSignedEntity.getTransactionStatusType()).build();
+        }
         //TODO: FIND A WAY TO CHANGE THE COLOR FOR COMPLETED OR IN PROGRESS
         //you actually just need to do this with transaction complet.
         //then pass it on the transaciton object status type
@@ -215,6 +222,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .homeCriteria(homeCriteria)
                 .preApproval(preApproval)
                 .acceptedOffer(acceptedOffer)
+                .homeInspection(homeInspection)
                 .transactionsComplete(transactionsComplete)
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
