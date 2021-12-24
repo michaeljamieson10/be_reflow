@@ -201,8 +201,23 @@ public class TransactionServiceImpl implements TransactionService {
         ContractsSignedEntity contractsSignedEntity = contractsSignedRepository.findByTransactionEntity(transactionEntity);
         ContractsSigned contractsSigned = ContractsSigned.builder().build();;
         if(Objects.nonNull(contractsSignedEntity)){
-            transactionsComplete = getTransactionTypeAndIncrement(homeInspectionEntity.getTransactionStatusType(),transactionsComplete);
+            transactionsComplete = getTransactionTypeAndIncrement(contractsSignedEntity.getTransactionStatusType(),transactionsComplete);
             contractsSigned = ContractsSigned.builder().id(contractsSignedEntity.getId()).transactionStatusType(contractsSignedEntity.getTransactionStatusType()).build();
+        }
+
+
+        AppraisalEntity appraisalEntity = appraisalRepository.findByTransactionEntity(transactionEntity);
+        Appraisal appraisal = Appraisal.builder().build();;
+        if(Objects.nonNull(appraisalEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(appraisalEntity.getTransactionStatusType(),transactionsComplete);
+            appraisal = Appraisal.builder().id(appraisalEntity.getId()).transactionStatusType(appraisalEntity.getTransactionStatusType()).build();
+        }
+
+        LoanCommitmentEntity loanCommitmentEntity = loanCommitmentRepository.findByTransactionEntity(transactionEntity);
+        LoanCommitment loanCommitment = LoanCommitment.builder().build();;
+        if(Objects.nonNull(loanCommitmentEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(homeInspectionEntity.getTransactionStatusType(),transactionsComplete);
+            loanCommitment = LoanCommitment.builder().id(loanCommitmentEntity.getId()).transactionStatusType(loanCommitmentEntity.getTransactionStatusType()).build();
         }
         //TODO: FIND A WAY TO CHANGE THE COLOR FOR COMPLETED OR IN PROGRESS
         //you actually just need to do this with transaction complet.
@@ -223,6 +238,8 @@ public class TransactionServiceImpl implements TransactionService {
                 .preApproval(preApproval)
                 .acceptedOffer(acceptedOffer)
                 .homeInspection(homeInspection)
+                .appraisal(appraisal)
+                .loanCommitment(loanCommitment)
                 .transactionsComplete(transactionsComplete)
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())

@@ -6,6 +6,7 @@ import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.Appraisal;
+import com.neighbor.model.transaction.Transaction;
 import com.neighbor.persistence.entity.transaction.AppraisalEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.AppraisalRepository;
@@ -50,9 +51,9 @@ public class AppraisalServiceImpl implements AppraisalService {
         appraisalEntity.setAppraisedDateTime(new Timestamp(appraisal.getDateTimeMilli()));
         appraisalEntity.setAppraisedValue(appraisal.getAppraisedValue());
         appraisalEntity.setTransactionStatusType(TransactionStatusType.completed);
-        appraisalRepository.save(appraisalEntity);
+        appraisalEntity = appraisalRepository.save(appraisalEntity);
 
-        return null;
+        return Appraisal.builder().transaction(Transaction.builder().id(transactionEntity.getId()).build()).appraisedDateTime(appraisalEntity.getAppraisedDateTime()).build();
     }
 
 //    @Override

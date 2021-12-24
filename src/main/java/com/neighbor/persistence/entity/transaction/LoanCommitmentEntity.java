@@ -1,5 +1,7 @@
 package com.neighbor.persistence.entity.transaction;
 
+import com.neighbor.enums.LoanCommitmentType;
+import com.neighbor.enums.TransactionStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -23,6 +25,13 @@ public class LoanCommitmentEntity {
     @JoinColumn(name="transaction_id")
     @OneToOne(optional = false)
     private TransactionEntity transactionEntity;
+
+    @Column(name="status", columnDefinition = "ENUM('not_started', 'in_progress', 'completed')")
+    @Enumerated(EnumType.STRING)
+    private TransactionStatusType transactionStatusType = TransactionStatusType.in_progress;
+
+    @Column(name = "commitment_status")
+    private LoanCommitmentType loanCommitmentType;
 
 
     @Column(name = "created_timestamp")
