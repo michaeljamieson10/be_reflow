@@ -4,7 +4,11 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.FinalWalkthrough;
+import com.neighbor.persistence.entity.transaction.FinalWalkthroughEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.FinalWalkthroughRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +21,33 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
+    private final FinalWalkthroughRepository finalWalkthroughRepository;
+
     @Autowired
     public FinalWalkthroughServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            FinalWalkthroughRepository finalWalkthroughRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.finalWalkthroughRepository = finalWalkthroughRepository;
     }
 
     @Override
     public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
-        return null;
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(finalWalkthrough.getTransaction());
+        FinalWalkthroughEntity finalWalkthroughEntity = new FinalWalkthroughEntity();
+        finalWalkthroughEntity.setTransactionEntity(transactionEntity);
+        finalWalkthroughEntity.setFinalWalkthroughStatusType(finalWalkthrough.getFinalWalkthroughStatusType());
+        finalWalkthroughEntity.setTransactionStatusType(TransactionStatusType.completed);
+        finalWalkthroughRepository.save(finalWalkthroughEntity);
+
+        return FinalWalkthrough.builder().build();
     }
 
 //    @Override

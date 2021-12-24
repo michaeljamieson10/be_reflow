@@ -1,6 +1,6 @@
 package com.neighbor.restservice.controller.transaction;
 
-import com.neighbor.model.transaction.HomeownersInsuance;
+import com.neighbor.model.transaction.HomeownersInsurance;
 import com.neighbor.service.transaction.HomeownersInsuranceService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class HomeownersInsuranceController {
 
     @ApiOperation(value = "Create a new HomeownersInsuance")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HomeownersInsuance> createNewHomeownersInsurance(@RequestBody HomeownersInsuance homeInspection) {
-        return new ResponseEntity<>(homeownersInsuranceService.createHomeInspection(homeInspection), HttpStatus.CREATED);
+    public ResponseEntity<HomeownersInsurance> createNewHomeownersInsurance(@RequestBody HomeownersInsurance homeInspection) {
+        return new ResponseEntity<>(homeownersInsuranceService.createHomeownersInsurance(homeInspection), HttpStatus.CREATED);
     }
 }

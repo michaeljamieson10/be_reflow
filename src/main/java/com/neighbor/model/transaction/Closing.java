@@ -1,6 +1,8 @@
 package com.neighbor.model.transaction;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.neighbor.enums.ClosingStatusType;
+import com.neighbor.enums.TransactionStatusType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +16,8 @@ import java.sql.Timestamp;
 public class Closing {
     private int id;
     private Transaction transaction;
+    private TransactionStatusType transactionStatusType;
+    private ClosingStatusType closingStatusType;
     private Timestamp createdTimetamp;
     private Timestamp updatedTimestamp;
 }

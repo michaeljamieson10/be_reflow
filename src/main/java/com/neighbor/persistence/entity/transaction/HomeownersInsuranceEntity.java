@@ -1,5 +1,6 @@
 package com.neighbor.persistence.entity.transaction;
 
+import com.neighbor.enums.HomeOwnersInsuranceStatusType;
 import com.neighbor.enums.TransactionStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class HomeownersInsuranceEntity {
     @Enumerated(EnumType.STRING)
     private TransactionStatusType transactionStatusType = TransactionStatusType.in_progress;
 
+    @Column(name="homeowners_insurance_status", columnDefinition = "ENUM('complete', 'pending')")
+    @Enumerated(EnumType.STRING)
+    private HomeOwnersInsuranceStatusType homeOwnersInsuranceStatusType;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp

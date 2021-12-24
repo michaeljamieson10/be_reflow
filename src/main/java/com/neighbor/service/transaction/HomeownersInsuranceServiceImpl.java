@@ -4,7 +4,11 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.model.transaction.HomeownersInsuance;
+import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.model.transaction.HomeownersInsurance;
+import com.neighbor.persistence.entity.transaction.HomeownersInsuranceEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.HomeownersInsuranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +21,32 @@ public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceServic
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
+    private final HomeownersInsuranceRepository homeownersInsuranceRepository;
+
     @Autowired
     public HomeownersInsuranceServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            HomeownersInsuranceRepository homeownersInsuranceRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.homeownersInsuranceRepository = homeownersInsuranceRepository;
     }
 
     @Override
-    public HomeownersInsuance createHomeInspection(HomeownersInsuance homeInspection) {
-        return null;
+    public HomeownersInsurance createHomeownersInsurance(HomeownersInsurance homeInspection) {
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+        HomeownersInsuranceEntity homeownersInsuranceEntity = new HomeownersInsuranceEntity();
+        homeownersInsuranceEntity.setTransactionEntity(transactionEntity);
+        homeownersInsuranceEntity.setHomeOwnersInsuranceStatusType(homeInspection.getHomeOwnersInsuranceStatusType());
+        homeownersInsuranceEntity.setTransactionStatusType(TransactionStatusType.completed);
+        homeownersInsuranceRepository.save(homeownersInsuranceEntity);
+        return HomeownersInsurance.builder().build();
     }
 
 //    @Override

@@ -4,7 +4,11 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.ClearToClose;
+import com.neighbor.persistence.entity.transaction.ClearToCloseEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.ClearToCloseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +21,34 @@ public class ClearToCloseServiceImpl implements ClearToCloseService {
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
+    private final ClearToCloseRepository clearToCloseRepository;
+
     @Autowired
     public ClearToCloseServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            ClearToCloseRepository clearToCloseRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.clearToCloseRepository = clearToCloseRepository;
     }
 
     @Override
-    public ClearToClose createNewClearToClose(ClearToCloseService clearToCloseService) {
-        return null;
+    public ClearToClose createNewClearToClose(ClearToClose clearToClose) {
+
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(clearToClose.getTransaction());
+        ClearToCloseEntity clearToCloseEntity = new ClearToCloseEntity();
+        clearToCloseEntity.setTransactionEntity(transactionEntity);
+        clearToCloseEntity.setClearToCloseStatusType(clearToClose.getClearToCloseStatusType());
+        clearToCloseEntity.setTransactionStatusType(TransactionStatusType.completed);
+        clearToCloseRepository.save(clearToCloseEntity);
+
+        return ClearToClose.builder().build();
     }
 
 //    @Override

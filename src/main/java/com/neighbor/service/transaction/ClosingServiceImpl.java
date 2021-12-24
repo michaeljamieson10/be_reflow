@@ -4,7 +4,11 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
+import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.model.transaction.Closing;
+import com.neighbor.persistence.entity.transaction.ClosingEntity;
+import com.neighbor.persistence.entity.transaction.TransactionEntity;
+import com.neighbor.persistence.repository.transaction.ClosingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +21,32 @@ public class ClosingServiceImpl implements ClosingService {
     private final FromEntity fromEntity;
     private final GetEntity getEntity;
 
+    private final ClosingRepository closingRepository;
+
     @Autowired
     public ClosingServiceImpl(
             PermissionsValidator permissionsValidator,
             AuthenticatedUserResolver authenticatedUserResolver,
             FromEntity fromEntity,
-            GetEntity getEntity
+            GetEntity getEntity,
+            ClosingRepository closingRepository
             ){
         this.permissionsValidator = permissionsValidator;
         this.authenticatedUserResolver = authenticatedUserResolver;
         this.getEntity = getEntity;
         this.fromEntity = fromEntity;
+        this.closingRepository = closingRepository;
     }
 
     @Override
     public Closing createNewClosing(Closing closing) {
-        return null;
+        TransactionEntity transactionEntity = getEntity.getTransactionEntity(closing.getTransaction());
+        ClosingEntity closingEntity = new ClosingEntity();
+        closingEntity.setClosingStatusType(closing.getClosingStatusType());
+        closingEntity.setTransactionStatusType(TransactionStatusType.completed);
+        closingEntity.setTransactionEntity(transactionEntity);
+        closingRepository.save(closingEntity);
+        return Closing.builder().build();
     }
 
 //    @Override

@@ -1,5 +1,7 @@
 package com.neighbor.persistence.entity.transaction;
 
+import com.neighbor.enums.ClearToCloseStatusType;
+import com.neighbor.enums.FinalWalkthroughStatusType;
 import com.neighbor.enums.TransactionStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,10 @@ public class FinalWalkthroughEntity {
     @Column(name="status", columnDefinition = "ENUM('not_started', 'in_progress', 'completed')")
     @Enumerated(EnumType.STRING)
     private TransactionStatusType transactionStatusType = TransactionStatusType.in_progress;
+
+    @Column(name="final_walkthrough_status", columnDefinition = "ENUM('complete', 'pending')")
+    @Enumerated(EnumType.STRING)
+    private FinalWalkthroughStatusType finalWalkthroughStatusType;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp

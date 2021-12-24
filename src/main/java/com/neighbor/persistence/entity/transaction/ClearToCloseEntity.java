@@ -1,5 +1,8 @@
 package com.neighbor.persistence.entity.transaction;
 
+import com.neighbor.enums.ClearToCloseStatusType;
+import com.neighbor.enums.HomeOwnersInsuranceStatusType;
+import com.neighbor.enums.TransactionStatusType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,6 +27,13 @@ public class ClearToCloseEntity{
     @OneToOne(optional = false)
     private TransactionEntity transactionEntity;
 
+    @Column(name="status", columnDefinition = "ENUM('not_started', 'in_progress', 'completed')")
+    @Enumerated(EnumType.STRING)
+    private TransactionStatusType transactionStatusType = TransactionStatusType.in_progress;
+
+    @Column(name="clear_to_close_status", columnDefinition = "ENUM('complete', 'pending')")
+    @Enumerated(EnumType.STRING)
+    private ClearToCloseStatusType clearToCloseStatusType;
 
     @Column(name = "created_timestamp")
     @CreationTimestamp

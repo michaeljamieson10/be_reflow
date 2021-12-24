@@ -1,7 +1,7 @@
 package com.neighbor.service.transaction;
 
-import com.neighbor.model.transaction.HomeownersInsuance;
+import com.neighbor.model.transaction.HomeownersInsurance;
 
 public interface HomeownersInsuranceService {
-    HomeownersInsuance createHomeInspection(HomeownersInsuance homeInspection);
+    HomeownersInsurance createHomeownersInsurance(HomeownersInsurance homeInspection);
 }

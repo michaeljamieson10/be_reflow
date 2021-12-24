@@ -26,7 +26,7 @@ public class Transaction {
     private ContractsSigned contractsSigned;
     private Appraisal appraisal;
     private LoanCommitment loanCommitment;
-    private HomeownersInsuance homeownersInsuance;
+    private HomeownersInsurance homeownersInsurance;
     private ClearToClose clearToClose;
     private FinalWalkthrough finalWalkthrough;
     private Closing closing;

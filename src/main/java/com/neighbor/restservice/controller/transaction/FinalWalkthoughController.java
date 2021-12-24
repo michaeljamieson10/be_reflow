@@ -27,7 +27,7 @@ public class FinalWalkthoughController {
 //        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
 //    }
 
-    @ApiOperation(value = "Create a new ClearToCloseService")
+    @ApiOperation(value = "Create a new FinalWalkthrough")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<FinalWalkthrough> createNewFinalWalkthrough(@RequestBody FinalWalkthrough finalWalkthrough) {
         return new ResponseEntity<>(finalWalkthroughService.createNewFinalWalkthrough(finalWalkthrough), HttpStatus.CREATED);

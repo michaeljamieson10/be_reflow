@@ -27,9 +27,9 @@ public class ClearToCloseController {
 //        return new ResponseEntity<>(userService.get(), HttpStatus.OK);
 //    }
 
-    @ApiOperation(value = "Create a new ClearToCloseService")
+    @ApiOperation(value = "Create a new ClearToClose")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ClearToClose> createNewClearToClose(@RequestBody ClearToCloseService clearToCloseService) {
-        return new ResponseEntity<>(clearToCloseService.createNewClearToClose(clearToCloseService), HttpStatus.CREATED);
+    public ResponseEntity<ClearToClose> createNewClearToClose(@RequestBody ClearToClose clearToClose) {
+        return new ResponseEntity<>(clearToCloseService.createNewClearToClose(clearToClose), HttpStatus.CREATED);
     }
 }

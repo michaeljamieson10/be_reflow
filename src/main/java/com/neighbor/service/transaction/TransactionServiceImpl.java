@@ -4,7 +4,6 @@ import com.neighbor.component.AuthenticatedUserResolver;
 import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
-import com.neighbor.enums.TransactionInvitationStatusType;
 import com.neighbor.enums.TransactionStatusType;
 import com.neighbor.exception.TransactionNotFoundException;
 import com.neighbor.model.Agent;
@@ -171,12 +170,12 @@ public class TransactionServiceImpl implements TransactionService {
 
         HomeCriteriaEntity homeCriteriaEntity = homeCriteriaRepository.findByTransactionEntity(transactionEntity);
         HomeCriteria homeCriteria = HomeCriteria.builder().build();
-
         if(Objects.nonNull(homeCriteriaEntity)){
             transactionsComplete = getTransactionTypeAndIncrement(homeCriteriaEntity.getTransactionStatusType(),transactionsComplete);
             homeCriteria = HomeCriteria.builder().id(homeCriteriaEntity.getId()).transactionStatusType(homeCriteriaEntity.getTransactionStatusType()).build();
         }
 
+//        returnPreApprovalAndCheckIfComplete(transactionEntity,transactionsComplete);
         PreApprovalEntity preApprovalEntity = preApprovalRepository.findByTransactionEntity(transactionEntity);
         PreApproval preApproval = PreApproval.builder().build();
         if(Objects.nonNull(preApprovalEntity)){
@@ -219,6 +218,34 @@ public class TransactionServiceImpl implements TransactionService {
             transactionsComplete = getTransactionTypeAndIncrement(homeInspectionEntity.getTransactionStatusType(),transactionsComplete);
             loanCommitment = LoanCommitment.builder().id(loanCommitmentEntity.getId()).transactionStatusType(loanCommitmentEntity.getTransactionStatusType()).build();
         }
+
+        HomeownersInsuranceEntity homeownersInsuranceEntity = homeownersInsuranceRepository.findByTransactionEntity(transactionEntity);
+        HomeownersInsurance homeownersInsurance = HomeownersInsurance.builder().build();
+        if(Objects.nonNull(homeownersInsuranceEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(homeownersInsuranceEntity.getTransactionStatusType(),transactionsComplete);
+            homeownersInsurance = HomeownersInsurance.builder().id(homeownersInsuranceEntity.getId()).transactionStatusType(homeownersInsuranceEntity.getTransactionStatusType()).build();
+        }
+
+        ClearToCloseEntity clearToCloseEntity = clearToCloseRepository.findByTransactionEntity(transactionEntity);
+        ClearToClose clearToClose = ClearToClose.builder().build();
+        if(Objects.nonNull(clearToCloseEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(homeownersInsuranceEntity.getTransactionStatusType(),transactionsComplete);
+            clearToClose = ClearToClose.builder().id(clearToCloseEntity.getId()).transactionStatusType(clearToCloseEntity.getTransactionStatusType()).build();
+        }
+
+        FinalWalkthroughEntity finalWalkthroughEntity = finalWalkthroughRepository.findByTransactionEntity(transactionEntity);
+        FinalWalkthrough finalWalkthrough = FinalWalkthrough.builder().build();
+        if(Objects.nonNull(finalWalkthroughEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(finalWalkthroughEntity.getTransactionStatusType(),transactionsComplete);
+            finalWalkthrough = FinalWalkthrough.builder().id(finalWalkthroughEntity.getId()).transactionStatusType(finalWalkthroughEntity.getTransactionStatusType()).build();
+        }
+
+        ClosingEntity closingEntity = closingRepository.findByTransactionEntity(transactionEntity);
+        Closing closing = Closing.builder().build();
+        if(Objects.nonNull(closingEntity)){
+            transactionsComplete = getTransactionTypeAndIncrement(closingEntity.getTransactionStatusType(),transactionsComplete);
+            closing = Closing.builder().id(finalWalkthroughEntity.getId()).transactionStatusType(finalWalkthroughEntity.getTransactionStatusType()).build();
+        }
         //TODO: FIND A WAY TO CHANGE THE COLOR FOR COMPLETED OR IN PROGRESS
         //you actually just need to do this with transaction complet.
         //then pass it on the transaciton object status type
@@ -240,12 +267,18 @@ public class TransactionServiceImpl implements TransactionService {
                 .homeInspection(homeInspection)
                 .appraisal(appraisal)
                 .loanCommitment(loanCommitment)
+                .homeownersInsurance(homeownersInsurance)
+                .clearToClose(clearToClose)
+                .finalWalkthrough(finalWalkthrough)
                 .transactionsComplete(transactionsComplete)
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
                 .updatedTimestamp(transactionEntity.getUpdatedTimestamp())
                 .build();
 
 //        return fromTransactionEntity(transactionEntity);
+    }
+
+    private void returnPreApprovalAndCheckIfComplete(TransactionEntity transactionEntity, int transactionsComplete) {
     }
 
     private int getTransactionTypeAndIncrement(TransactionStatusType transactionStatusType, int transactionsComplete) {
