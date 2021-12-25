@@ -5,12 +5,17 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.Appraisal;
 import com.neighbor.model.transaction.ClearToClose;
+import com.neighbor.persistence.entity.transaction.AppraisalEntity;
 import com.neighbor.persistence.entity.transaction.ClearToCloseEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.ClearToCloseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class ClearToCloseServiceImpl implements ClearToCloseService {
@@ -42,6 +47,10 @@ public class ClearToCloseServiceImpl implements ClearToCloseService {
     public ClearToClose createNewClearToClose(ClearToClose clearToClose) {
 
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(clearToClose.getTransaction());
+
+        ClearToCloseEntity clearToCloseEntityCheckIfExist = clearToCloseRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(clearToCloseEntityCheckIfExist)) throw new EntityAlreadyExistException(ClearToClose.class,transactionEntity.getId());
+
         ClearToCloseEntity clearToCloseEntity = new ClearToCloseEntity();
         clearToCloseEntity.setTransactionEntity(transactionEntity);
         clearToCloseEntity.setClearToCloseStatusType(clearToClose.getClearToCloseStatusType());

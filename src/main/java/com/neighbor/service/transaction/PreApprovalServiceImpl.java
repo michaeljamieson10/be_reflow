@@ -5,7 +5,10 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.LoanCommitment;
 import com.neighbor.model.transaction.PreApproval;
+import com.neighbor.persistence.entity.transaction.LoanCommitmentEntity;
 import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.ClientRepository;
@@ -13,6 +16,8 @@ import com.neighbor.persistence.repository.UserRepository;
 import com.neighbor.persistence.repository.transaction.PreApprovalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class PreApprovalServiceImpl implements PreApprovalService {
@@ -48,6 +53,10 @@ public class PreApprovalServiceImpl implements PreApprovalService {
     public PreApproval createNewPreApproval(PreApproval preApproval) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(preApproval.getTransaction());
+
+        PreApprovalEntity preApprovalEntityCheckIfExist = preApprovalRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(preApprovalEntityCheckIfExist)) throw new EntityAlreadyExistException(PreApproval.class,transactionEntity.getId());
+
         PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
         preApprovalEntity.setTransactionEntity(transactionEntity);
         preApprovalEntity.setMaxPurchasePrice(preApproval.getMaxPurchasePrice());

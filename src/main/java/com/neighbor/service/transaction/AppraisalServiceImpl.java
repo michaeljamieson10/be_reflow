@@ -5,8 +5,11 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.AcceptedOffer;
 import com.neighbor.model.transaction.Appraisal;
 import com.neighbor.model.transaction.Transaction;
+import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
 import com.neighbor.persistence.entity.transaction.AppraisalEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.AppraisalRepository;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Service
 public class AppraisalServiceImpl implements AppraisalService {
@@ -45,6 +49,9 @@ public class AppraisalServiceImpl implements AppraisalService {
     public Appraisal createNewAppraisal(Appraisal appraisal) {
 
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(appraisal.getTransaction());
+
+        AppraisalEntity appraisalEntityCheckIfExist = appraisalRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(appraisalEntityCheckIfExist)) throw new EntityAlreadyExistException(Appraisal.class,transactionEntity.getId());
 
         AppraisalEntity appraisalEntity = new AppraisalEntity();
         appraisalEntity.setTransactionEntity(transactionEntity);

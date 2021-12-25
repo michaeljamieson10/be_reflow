@@ -5,12 +5,17 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.ContractsSigned;
 import com.neighbor.model.transaction.FinalWalkthrough;
+import com.neighbor.persistence.entity.transaction.ContractsSignedEntity;
 import com.neighbor.persistence.entity.transaction.FinalWalkthroughEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.FinalWalkthroughRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
@@ -41,6 +46,10 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
     @Override
     public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(finalWalkthrough.getTransaction());
+
+        FinalWalkthroughEntity finalWalkthroughEntityCheckIfExist = finalWalkthroughRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(finalWalkthroughEntityCheckIfExist)) throw new EntityAlreadyExistException(FinalWalkthrough.class,transactionEntity.getId());
+
         FinalWalkthroughEntity finalWalkthroughEntity = new FinalWalkthroughEntity();
         finalWalkthroughEntity.setTransactionEntity(transactionEntity);
         finalWalkthroughEntity.setFinalWalkthroughStatusType(finalWalkthrough.getFinalWalkthroughStatusType());

@@ -5,12 +5,17 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.HomeownersInsurance;
 import com.neighbor.model.transaction.LoanCommitment;
+import com.neighbor.persistence.entity.transaction.HomeownersInsuranceEntity;
 import com.neighbor.persistence.entity.transaction.LoanCommitmentEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.LoanCommitmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class LoanCommitmentServiceImpl implements LoanCommitmentService {
@@ -41,6 +46,10 @@ public class LoanCommitmentServiceImpl implements LoanCommitmentService {
     @Override
     public LoanCommitment createNewLoanCommitment(LoanCommitment loanCommitment) {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(loanCommitment.getTransaction());
+
+        LoanCommitmentEntity loanCommitmentEntityCheckIfExist = loanCommitmentRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(loanCommitmentEntityCheckIfExist)) throw new EntityAlreadyExistException(LoanCommitment.class,transactionEntity.getId());
+
         LoanCommitmentEntity loanCommitmentEntity = new LoanCommitmentEntity();
         loanCommitmentEntity.setTransactionEntity(transactionEntity);
         loanCommitmentEntity.setLoanCommitmentType(loanCommitment.getLoanCommitmentType());

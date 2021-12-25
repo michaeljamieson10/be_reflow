@@ -5,12 +5,17 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.HomeInspection;
 import com.neighbor.model.transaction.HomeownersInsurance;
+import com.neighbor.persistence.entity.transaction.HomeInspectionEntity;
 import com.neighbor.persistence.entity.transaction.HomeownersInsuranceEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.HomeownersInsuranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceService {
@@ -41,6 +46,10 @@ public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceServic
     @Override
     public HomeownersInsurance createHomeownersInsurance(HomeownersInsurance homeInspection) {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+
+        HomeownersInsuranceEntity homeownersInsuranceEntityCheckIfExist = homeownersInsuranceRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(homeownersInsuranceEntityCheckIfExist)) throw new EntityAlreadyExistException(HomeownersInsurance.class,transactionEntity.getId());
+
         HomeownersInsuranceEntity homeownersInsuranceEntity = new HomeownersInsuranceEntity();
         homeownersInsuranceEntity.setTransactionEntity(transactionEntity);
         homeownersInsuranceEntity.setHomeOwnersInsuranceStatusType(homeInspection.getHomeOwnersInsuranceStatusType());

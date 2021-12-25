@@ -5,13 +5,18 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
 import com.neighbor.model.transaction.AcceptedOffer;
+import com.neighbor.model.transaction.Closing;
 import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
+import com.neighbor.persistence.entity.transaction.ClosingEntity;
 import com.neighbor.persistence.entity.transaction.PreApprovalEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.AcceptedOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class AcceptedOfferServiceImpl implements AcceptedOfferService {
@@ -41,6 +46,10 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
     public AcceptedOffer createAcceptedOffer(AcceptedOffer acceptedOffer) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(acceptedOffer.getTransaction());
+
+
+        AcceptedOfferEntity acceptedOfferEntityCheckIfExist = acceptedOfferRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(acceptedOfferEntityCheckIfExist)) throw new EntityAlreadyExistException(AcceptedOffer.class,transactionEntity.getId());
 //        PreApprovalEntity preApprovalEntity = new PreApprovalEntity();
 //        preApprovalEntity.setTransactionEntity(transactionEntity);
 //        acceptedOfferRepository.save(preApprovalEntity);

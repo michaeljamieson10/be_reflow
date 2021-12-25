@@ -5,8 +5,11 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.FinalWalkthrough;
 import com.neighbor.model.transaction.HomeCriteria;
 import com.neighbor.persistence.entity.AgentEntity;
+import com.neighbor.persistence.entity.transaction.FinalWalkthroughEntity;
 import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.ClientRepository;
@@ -56,6 +59,10 @@ public class HomeCriteriaServiceImpl implements HomeCriteriaService {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeCriteria.getTransaction());
 //        AgentEntity agentEntity = getEntity.getAgentEntity(homeCriteria.getTransaction().getAgent());
 //        permissionsValidator.validateCorrectUserEntity(transactionEntity.getAgentEntity().getUserEntity(), agentEntity.getUserEntity());
+
+        HomeCriteriaEntity homeCriteriaEntityCheckIfExist = homeCriteriaRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(homeCriteriaEntityCheckIfExist)) throw new EntityAlreadyExistException(HomeCriteria.class,transactionEntity.getId());
+
         //TODO: Check if already exist throw error
         HomeCriteriaEntity homeCriteriaEntity = new HomeCriteriaEntity();
         homeCriteriaEntity.setTransactionEntity(transactionEntity);

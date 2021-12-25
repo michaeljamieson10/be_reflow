@@ -5,12 +5,15 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
 import com.neighbor.model.transaction.Closing;
 import com.neighbor.persistence.entity.transaction.ClosingEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.ClosingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class ClosingServiceImpl implements ClosingService {
@@ -41,6 +44,10 @@ public class ClosingServiceImpl implements ClosingService {
     @Override
     public Closing createNewClosing(Closing closing) {
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(closing.getTransaction());
+
+        ClosingEntity closingEntityCheckIfExist = closingRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(closingEntityCheckIfExist)) throw new EntityAlreadyExistException(Closing.class,transactionEntity.getId());
+
         ClosingEntity closingEntity = new ClosingEntity();
         closingEntity.setClosingStatusType(closing.getClosingStatusType());
         closingEntity.setTransactionStatusType(TransactionStatusType.completed);

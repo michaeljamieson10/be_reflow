@@ -5,8 +5,11 @@ import com.neighbor.component.FromEntity;
 import com.neighbor.component.GetEntity;
 import com.neighbor.component.PermissionsValidator;
 import com.neighbor.enums.TransactionStatusType;
+import com.neighbor.exception.EntityAlreadyExistException;
+import com.neighbor.model.transaction.HomeCriteria;
 import com.neighbor.model.transaction.HomeInspection;
 import com.neighbor.persistence.entity.transaction.AcceptedOfferEntity;
+import com.neighbor.persistence.entity.transaction.HomeCriteriaEntity;
 import com.neighbor.persistence.entity.transaction.HomeInspectionEntity;
 import com.neighbor.persistence.entity.transaction.TransactionEntity;
 import com.neighbor.persistence.repository.transaction.HomeInspectionRepository;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 
 @Service
@@ -45,6 +49,11 @@ public class HomeInspectionServiceImpl implements HomeInspectionService {
     public HomeInspection createHomeInspection(HomeInspection homeInspection) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
         TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+
+        HomeInspectionEntity homeInspectionEntityCheckIfExist = homeInspectionRepository.findByTransactionEntity(transactionEntity);
+        if(Objects.nonNull(homeInspectionEntityCheckIfExist)) throw new EntityAlreadyExistException(HomeInspection.class,transactionEntity.getId());
+
+
         HomeInspectionEntity homeInspectionEntity = new HomeInspectionEntity();
         homeInspectionEntity.setTransactionEntity(transactionEntity);
         homeInspectionEntity.setHomeInspectionStatusType(homeInspection.getHomeInspectionStatusType());
