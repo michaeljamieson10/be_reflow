@@ -244,7 +244,7 @@ public class TransactionServiceImpl implements TransactionService {
         Closing closing = Closing.builder().build();
         if(Objects.nonNull(closingEntity)){
             transactionsComplete = getTransactionTypeAndIncrement(closingEntity.getTransactionStatusType(),transactionsComplete);
-            closing = Closing.builder().id(finalWalkthroughEntity.getId()).transactionStatusType(finalWalkthroughEntity.getTransactionStatusType()).build();
+            closing = Closing.builder().id(closingEntity.getId()).transactionStatusType(closingEntity.getTransactionStatusType()).build();
         }
         //TODO: FIND A WAY TO CHANGE THE COLOR FOR COMPLETED OR IN PROGRESS
         //you actually just need to do this with transaction complet.
