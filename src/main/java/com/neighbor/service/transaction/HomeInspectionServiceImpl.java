@@ -57,7 +57,7 @@ public class HomeInspectionServiceImpl implements HomeInspectionService {
         HomeInspectionEntity homeInspectionEntity = new HomeInspectionEntity();
         homeInspectionEntity.setTransactionEntity(transactionEntity);
         homeInspectionEntity.setHomeInspectionStatusType(homeInspection.getHomeInspectionStatusType());
-        homeInspectionEntity.setScheduledDateTime(new Timestamp(homeInspection.getScheduledDateTimeMilli()));
+        if(Objects.nonNull(homeInspection.getScheduledDateTimeMilli()))homeInspectionEntity.setScheduledDateTime(new Timestamp(homeInspection.getScheduledDateTimeMilli()));
         homeInspectionEntity.setTransactionStatusType(TransactionStatusType.completed);
         homeInspectionRepository.save(homeInspectionEntity);
 
