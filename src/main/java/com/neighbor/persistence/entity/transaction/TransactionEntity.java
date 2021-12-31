@@ -36,7 +36,7 @@ public class TransactionEntity {
 
     @NonNull
     @JoinColumn(name="agent_id")
-    @OneToOne(optional = false)
+    @OneToOne(optional = true)
     private AgentEntity agentEntity;
 
 
