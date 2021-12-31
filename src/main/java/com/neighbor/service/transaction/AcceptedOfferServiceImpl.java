@@ -45,7 +45,7 @@ public class AcceptedOfferServiceImpl implements AcceptedOfferService {
     @Override
     public AcceptedOffer createAcceptedOffer(AcceptedOffer acceptedOffer) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(acceptedOffer.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(acceptedOffer.getTransaction());
 
 
         AcceptedOfferEntity acceptedOfferEntityCheckIfExist = acceptedOfferRepository.findByTransactionEntity(transactionEntity);

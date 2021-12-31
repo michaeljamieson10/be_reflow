@@ -52,7 +52,7 @@ public class PreApprovalServiceImpl implements PreApprovalService {
     @Override
     public PreApproval createNewPreApproval(PreApproval preApproval) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(preApproval.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(preApproval.getTransaction());
 
         PreApprovalEntity preApprovalEntityCheckIfExist = preApprovalRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(preApprovalEntityCheckIfExist)) throw new EntityAlreadyExistException(PreApproval.class,transactionEntity.getId());

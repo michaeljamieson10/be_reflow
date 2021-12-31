@@ -45,7 +45,7 @@ public class LoanCommitmentServiceImpl implements LoanCommitmentService {
 
     @Override
     public LoanCommitment createNewLoanCommitment(LoanCommitment loanCommitment) {
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(loanCommitment.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(loanCommitment.getTransaction());
 
         LoanCommitmentEntity loanCommitmentEntityCheckIfExist = loanCommitmentRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(loanCommitmentEntityCheckIfExist)) throw new EntityAlreadyExistException(LoanCommitment.class,transactionEntity.getId());

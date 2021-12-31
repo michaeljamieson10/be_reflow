@@ -46,7 +46,7 @@ public class ClearToCloseServiceImpl implements ClearToCloseService {
     @Override
     public ClearToClose createNewClearToClose(ClearToClose clearToClose) {
 
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(clearToClose.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(clearToClose.getTransaction());
 
         ClearToCloseEntity clearToCloseEntityCheckIfExist = clearToCloseRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(clearToCloseEntityCheckIfExist)) throw new EntityAlreadyExistException(ClearToClose.class,transactionEntity.getId());

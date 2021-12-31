@@ -48,7 +48,7 @@ public class AppraisalServiceImpl implements AppraisalService {
     @Override
     public Appraisal createNewAppraisal(Appraisal appraisal) {
 
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(appraisal.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(appraisal.getTransaction());
 
         AppraisalEntity appraisalEntityCheckIfExist = appraisalRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(appraisalEntityCheckIfExist)) throw new EntityAlreadyExistException(Appraisal.class,transactionEntity.getId());

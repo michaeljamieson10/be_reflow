@@ -48,7 +48,7 @@ public class HomeInspectionServiceImpl implements HomeInspectionService {
     @Override
     public HomeInspection createHomeInspection(HomeInspection homeInspection) {
 //        permissionsValidator.validateAgentOrSystemAdminOrClient(authenticatedUserResolver.user());
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(homeInspection.getTransaction());
 
         HomeInspectionEntity homeInspectionEntityCheckIfExist = homeInspectionRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(homeInspectionEntityCheckIfExist)) throw new EntityAlreadyExistException(HomeInspection.class,transactionEntity.getId());

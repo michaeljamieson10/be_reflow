@@ -1,9 +1,6 @@
 package com.neighbor.component;
 
-import com.neighbor.exception.AgentNotFoundException;
-import com.neighbor.exception.ClientNotFoundException;
-import com.neighbor.exception.NotFoundException;
-import com.neighbor.exception.UserNotFoundException;
+import com.neighbor.exception.*;
 import com.neighbor.model.Agent;
 import com.neighbor.model.Client;
 import com.neighbor.model.User;
@@ -38,6 +35,8 @@ public class GetEntity {
     private final HomeownersInsuranceRepository homeownersInsuranceRepository;
     private final ClearToCloseRepository clearToCloseRepository;
     private final FinalWalkthroughRepository finalWalkthroughRepository;
+    private final PermissionsValidator permissionsValidator;
+    private final AuthenticatedUserResolver authenticatedUserResolver;
 
     @Autowired
     public GetEntity(
@@ -55,7 +54,9 @@ public class GetEntity {
             LoanCommitmentRepository loanCommitmentRepository,
             HomeownersInsuranceRepository homeownersInsuranceRepository,
             ClearToCloseRepository clearToCloseRepository,
-            FinalWalkthroughRepository finalWalkthroughRepository
+            FinalWalkthroughRepository finalWalkthroughRepository,
+            PermissionsValidator permissionsValidator,
+            AuthenticatedUserResolver authenticatedUserResolver
     ) {
         this.userResolver = userResolver;
         this.agentRepository = agentRepository;
@@ -72,6 +73,8 @@ public class GetEntity {
         this.homeownersInsuranceRepository = homeownersInsuranceRepository;
         this.clearToCloseRepository = clearToCloseRepository;
         this.finalWalkthroughRepository = finalWalkthroughRepository;
+        this.permissionsValidator = permissionsValidator;
+        this.authenticatedUserResolver = authenticatedUserResolver;
 
     }
 
@@ -79,6 +82,11 @@ public class GetEntity {
         if(Objects.isNull(client) || Objects.isNull(client.getId())) throw new ClientNotFoundException(0);
         ClientEntity clientEntity = clientRepository.findById(client.getId()).orElse(null);
         if(Objects.isNull(clientEntity)) throw new ClientNotFoundException(client.getId());
+        return clientEntity;
+    }
+    public ClientEntity getClientEntityByUserEntity(UserEntity userEntity) {
+        if(Objects.isNull(userEntity) || Objects.isNull(userEntity.getId())) throw new ClientNotFoundException(0);
+        ClientEntity clientEntity = clientRepository.findByUserEntity(userEntity);
         return clientEntity;
     }
     public AgentEntity getAgentEntity(Agent agent) {
@@ -90,7 +98,7 @@ public class GetEntity {
     public AgentEntity getAgentEntityByUserEntity(UserEntity userEntity) {
         if(Objects.isNull(userEntity) || Objects.isNull(userEntity.getId())) throw new UserNotFoundException(0);
         AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
-        if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(userEntity.getId());
+//        if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(userEntity.getId());
         return agentEntity;
     }
     public AgentEntity getAgentEntityByUserEntity_ID(UserEntity userEntity) {
@@ -109,6 +117,19 @@ public class GetEntity {
         if(Objects.isNull(transaction) || Objects.isNull(transaction.getId())) throw new NotFoundException("Transaction",0);
         TransactionEntity transactionEntity = transactionRepository.findById(transaction.getId()).orElse(null);
         if(Objects.isNull(transactionEntity)) throw new NotFoundException("Transaction",transaction.getId());
+        return transactionEntity;
+    }
+    public TransactionEntity getTransactionEntityCheckREA_AndClient(Transaction transaction) {
+        TransactionEntity transactionEntity = getTransactionEntity(transaction);
+        UserEntity userEntity = authenticatedUserResolver.user();
+        AgentEntity agentEntity = getAgentEntityByUserEntity(userEntity);
+        ClientEntity clientEntity = getClientEntityByUserEntity(userEntity);
+        if(Objects.nonNull(agentEntity))
+            if(!transactionEntity.getAgentEntity().equals(agentEntity))
+                throw new AccessDeniedException();
+        if(Objects.nonNull(clientEntity))
+            if(!transactionEntity.getClientEntity().equals(clientEntity))
+                throw new AccessDeniedException();
         return transactionEntity;
     }
     public HomeCriteriaEntity getHomeCriteriaEntity(HomeCriteria homeCriteria) {

@@ -56,7 +56,8 @@ public class HomeCriteriaServiceImpl implements HomeCriteriaService {
 
     @Override
     public HomeCriteria createNewHomeCriteria(HomeCriteria homeCriteria) {
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeCriteria.getTransaction());
+//        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeCriteria.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(homeCriteria.getTransaction());
 //        AgentEntity agentEntity = getEntity.getAgentEntity(homeCriteria.getTransaction().getAgent());
 //        permissionsValidator.validateCorrectUserEntity(transactionEntity.getAgentEntity().getUserEntity(), agentEntity.getUserEntity());
 

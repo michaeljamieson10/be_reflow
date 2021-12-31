@@ -45,7 +45,7 @@ public class ContractsSignedServiceImpl implements ContractsSignedService {
     @Override
     public ContractsSigned createNewContractsSigned(ContractsSigned contractsSigned) {
 
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(contractsSigned.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(contractsSigned.getTransaction());
 
         ContractsSignedEntity contractsSignedEntityCheckIfExist = contractsSignedRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(contractsSignedEntityCheckIfExist)) throw new EntityAlreadyExistException(ContractsSigned.class,transactionEntity.getId());

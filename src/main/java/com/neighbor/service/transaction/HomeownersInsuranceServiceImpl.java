@@ -45,7 +45,7 @@ public class HomeownersInsuranceServiceImpl implements HomeownersInsuranceServic
 
     @Override
     public HomeownersInsurance createHomeownersInsurance(HomeownersInsurance homeInspection) {
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(homeInspection.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(homeInspection.getTransaction());
 
         HomeownersInsuranceEntity homeownersInsuranceEntityCheckIfExist = homeownersInsuranceRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(homeownersInsuranceEntityCheckIfExist)) throw new EntityAlreadyExistException(HomeownersInsurance.class,transactionEntity.getId());

@@ -45,7 +45,7 @@ public class FinalWalkthroughServiceImpl implements FinalWalkthroughService {
 
     @Override
     public FinalWalkthrough createNewFinalWalkthrough(FinalWalkthrough finalWalkthrough) {
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(finalWalkthrough.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(finalWalkthrough.getTransaction());
 
         FinalWalkthroughEntity finalWalkthroughEntityCheckIfExist = finalWalkthroughRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(finalWalkthroughEntityCheckIfExist)) throw new EntityAlreadyExistException(FinalWalkthrough.class,transactionEntity.getId());

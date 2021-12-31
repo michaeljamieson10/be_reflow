@@ -43,7 +43,7 @@ public class ClosingServiceImpl implements ClosingService {
 
     @Override
     public Closing createNewClosing(Closing closing) {
-        TransactionEntity transactionEntity = getEntity.getTransactionEntity(closing.getTransaction());
+        TransactionEntity transactionEntity = getEntity.getTransactionEntityCheckREA_AndClient(closing.getTransaction());
 
         ClosingEntity closingEntityCheckIfExist = closingRepository.findByTransactionEntity(transactionEntity);
         if(Objects.nonNull(closingEntityCheckIfExist)) throw new EntityAlreadyExistException(Closing.class,transactionEntity.getId());
