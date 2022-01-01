@@ -103,14 +103,19 @@ public class TransactionServiceImpl implements TransactionService {
         if(Objects.nonNull(clientEntity))transactionEntity.setClientEntity(clientEntity);
 
 
+
         transactionEntity.setFirstName(transaction.getFirstName());
         transactionEntity.setLastName(transaction.getLastName());
         transactionEntity = transactionRepository.save(transactionEntity);
 
 //        return fromEntity.fromTransactionEntity(transactionEntity,transactionEntity.getAgentEntity());
+        Agent agent = null; Client client = null;
+        if(Objects.nonNull(agentEntity)) agent = Agent.builder().id(transactionEntity.getAgentEntity().getId()).build();
+        if(Objects.nonNull(clientEntity)) client = Client.builder().id(transactionEntity.getClientEntity().getId()).build();
         return Transaction.builder()
                 .id(transactionEntity.getId())
-                .agent(Agent.builder().id(transactionEntity.getAgentEntity().getId()).build())
+                .agent(agent)
+                .client(client)
                 .firstName(transactionEntity.getFirstName())
                 .lastName(transactionEntity.getLastName())
                 .createdTimetamp(transactionEntity.getCreatedTimestamp())
