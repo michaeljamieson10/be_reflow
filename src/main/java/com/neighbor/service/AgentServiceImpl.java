@@ -53,7 +53,7 @@ public class AgentServiceImpl implements AgentService {
         agentEntity.setUserEntity(userEntity);
         agentEntity.setActive(true);
         agentRepository.save(agentEntity);
-        return fromEntity.fromAgentEntity(agentEntity);
+        return Agent.fromAgentEntity(agentEntity);
     }
 
     @Override
@@ -61,7 +61,8 @@ public class AgentServiceImpl implements AgentService {
         UserEntity userEntity = authenticatedUserResolver.user();
         AgentEntity agentEntity = agentRepository.findByUserEntity(userEntity);
         if(Objects.isNull(agentEntity)) throw new AgentNotFoundException(0);
-        return fromEntity.fromAgentEntity(agentEntity);
+        return Agent.fromAgentEntity(agentEntity);
     }
+
 
 }
